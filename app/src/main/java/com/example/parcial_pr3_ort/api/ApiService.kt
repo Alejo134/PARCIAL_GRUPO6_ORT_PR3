@@ -1,8 +1,8 @@
 package com.example.parcial_pr3_ort.api
 
-import com.example.parcial_pr3_ort.data.dao.LoginResponse
-import com.example.parcial_pr3_ort.data.dao.UserAccount
-import com.example.parcial_pr3_ort.data.dao.UserDetail
+import com.example.parcial_pr3_ort.data.model.LoginResponse
+import com.example.parcial_pr3_ort.data.model.UserAccount
+import com.example.parcial_pr3_ort.data.model.UserDetail
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
