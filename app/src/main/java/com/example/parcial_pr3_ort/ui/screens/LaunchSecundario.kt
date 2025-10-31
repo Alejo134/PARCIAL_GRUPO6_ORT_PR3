@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -28,6 +29,7 @@ import com.example.parcial_pr3_ort.ui.theme.CaribbeanGreen
 import com.example.parcial_pr3_ort.ui.theme.Cyprus
 import com.example.parcial_pr3_ort.ui.theme.Honeydew
 import com.example.parcial_pr3_ort.ui.theme.LightGreen
+import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
 
 @Composable
 fun PreWelcomeScreen() {
@@ -74,7 +76,7 @@ fun PreWelcomeScreen() {
             ButtonLog(
                 stringId = R.string.log_in,
                 backgroundColor = CaribbeanGreen,
-                textColor = Cyprus,
+                textColor = MaterialTheme.colorScheme.onPrimary,
                 onClick = { /* TODO: Log In */ }
             )
 
@@ -82,8 +84,8 @@ fun PreWelcomeScreen() {
 
             ButtonLog(
                 stringId = R.string.sign_up,
-                backgroundColor = LightGreen,
-                textColor = Cyprus,
+                backgroundColor = MaterialTheme.colorScheme.secondary,
+                textColor = MaterialTheme.colorScheme.onPrimary,
                 onClick = { /* TODO: Sign Up */ }
             )
 
@@ -103,5 +105,7 @@ fun PreWelcomeScreen() {
 @Preview
 @Composable
 fun PreWelcomeScreenPreview() {
-    PreWelcomeScreen()
+    PARCIALPR3ORTTheme {
+        PreWelcomeScreen()
+    }
 }

@@ -38,4 +38,22 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="already_have_account">Already have an account?</string>
     <string name="email">Email</string>
+    <string name="forgot_password_title">Forgot Password</string>
+    <string name="reset_password_q">Reset Password?</string>
+    <string name="reset_password_tagline">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="enter_email_address">Enter Email Address</string>
+    <string name="next_step">Next Step</string>
+    <string name="security_pin_title">Security Pin</string>
+    <string name="enter_security_pin">Enter Security Pin</string>
+    <string name="accept">Accept</string>
+    <string name="send_again">Send Again</string>
+    <string name="new_password_title">New Password</string>
+    <string name="new_password_label">New Password</string>
+    <string name="confirm_new_password_label">Confirm New Password</string>
+    <string name="change_password_button">Change Password</string>
+    <string name="password_changed_success">Password Has Been Changed Successfully</string>
+    <string name="password_changed_error">An Error Occurred, Please Try Again</string>
+    <string name="loading_animation_desc">Animación de carga</string>
+    <string name="success_animation_desc">Animación de éxito</string>
+    <string name="error_animation_desc">Animación de error</string>
 </resources>

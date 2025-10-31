@@ -1,11 +1,13 @@
 package com.example.parcial_pr3_ort.ui.screens
 
-import com.example.parcial_pr3_ort.ui.components.PageIndicator
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
@@ -18,11 +20,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
 import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.ui.components.ImageWithCircleBackground
 import com.example.parcial_pr3_ort.ui.components.OnboardingScreenLayout
+import com.example.parcial_pr3_ort.ui.components.PageIndicator
 import com.example.parcial_pr3_ort.ui.theme.Cyprus
+import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
+import kotlinx.coroutines.launch
 
 private data class OnboardingPage(
     @StringRes val textResId: Int,
@@ -42,13 +46,14 @@ private val onboardingPages = listOf(
         imageDescResId = R.string.onboarding_image_phone_desc
     )
 )
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnboardingScreen() {
 
     val pagerState = rememberPagerState { onboardingPages.size }
     val scope = rememberCoroutineScope()
-      HorizontalPager(
+    HorizontalPager(
         state = pagerState,
         modifier = Modifier.fillMaxSize()
     ) { pageIndex ->
@@ -99,7 +104,7 @@ fun OnboardingScreen() {
                     currentPage = pagerState.currentPage
                 )
 
-                Spacer(modifier = Modifier.weight(1f)) // Empuja todo hacia arriba
+                Spacer(modifier = Modifier.weight(1f))
             }
         )
     }
@@ -109,5 +114,7 @@ fun OnboardingScreen() {
 @Preview(showBackground = true)
 @Composable
 fun OnboardingScreenPreview() {
-    OnboardingScreen()
+    PARCIALPR3ORTTheme {
+        OnboardingScreen()
+    }
 }

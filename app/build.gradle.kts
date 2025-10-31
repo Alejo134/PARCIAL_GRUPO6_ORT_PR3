@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.firebase.appdistribution.gradle)
     implementation(libs.androidx.room.common.jvm)
     implementation(libs.androidx.runtime)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.3")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

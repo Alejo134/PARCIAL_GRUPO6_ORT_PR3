@@ -14,7 +14,7 @@ interface ApiService {
     @GET("transactions")
     suspend fun getUserAccount(): Response<UserAccount>
 
-    @GET ("users/{id}")
+    @GET("users/{id}")
     suspend fun getUserById(@Path("id") userId: Int): Response<UserDetail>
 
     @POST("auth/login")

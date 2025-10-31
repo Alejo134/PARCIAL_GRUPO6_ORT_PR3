@@ -1,6 +1,5 @@
 package com.example.parcial_pr3_ort.api
 
-import com.example.parcial_pr3_ort.api.ApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

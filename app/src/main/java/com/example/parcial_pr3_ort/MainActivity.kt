@@ -7,17 +7,18 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import com.example.parcial_pr3_ort.api.RetrofitClient
 import com.example.parcial_pr3_ort.ui.screens.CreateAccountScreen
-import com.example.parcial_pr3_ort.ui.screens.LoginScreen
 import com.example.parcial_pr3_ort.ui.screens.OnboardingScreen
+import com.example.parcial_pr3_ort.ui.screens.PasswordChangeState
+import com.example.parcial_pr3_ort.ui.screens.PasswordChangedContent
+import com.example.parcial_pr3_ort.ui.screens.PasswordChangedScreen
+import com.example.parcial_pr3_ort.ui.screens.SecurityPinScreen
 import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
 import kotlinx.coroutines.launch
 
@@ -53,7 +54,10 @@ class MainActivity : ComponentActivity() {
                         Log.i(TAG, "Token recibido: ${it.token}")
                     }
                 } else {
-                    Log.e(TAG, "Error en el login: ${loginResponse.code()} - ${loginResponse.message()}")
+                    Log.e(
+                        TAG,
+                        "Error en el login: ${loginResponse.code()} - ${loginResponse.message()}"
+                    )
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Excepción durante el login", e)
@@ -71,7 +75,10 @@ class MainActivity : ComponentActivity() {
                         Log.i(TAG, "Usuario creado con ID: ${it.id} y nombre: ${it.name.firstname}")
                     }
                 } else {
-                    Log.e(TAG, "Error al crear usuario: ${createUserResponse.code()} - ${createUserResponse.message()}")
+                    Log.e(
+                        TAG,
+                        "Error al crear usuario: ${createUserResponse.code()} - ${createUserResponse.message()}"
+                    )
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Excepción al crear usuario", e)
@@ -82,9 +89,9 @@ class MainActivity : ComponentActivity() {
             try {
                 val responseUsers = RetrofitClient.api.getUserById(1)
 
-                if(responseUsers.isSuccessful){
+                if (responseUsers.isSuccessful) {
                     val userDetail = responseUsers.body()
-                    if(userDetail != null) {
+                    if (userDetail != null) {
                         Log.i(TAG, "Llamada a la API de usuario exitosa:")
                         Log.i(TAG, "ID de Usuario: ${userDetail.id}")
                         Log.i(TAG, "address: ${userDetail.address}")
@@ -98,11 +105,17 @@ class MainActivity : ComponentActivity() {
                         Log.e(TAG, "La respuesta de usuario está vacía (body is null)")
                     }
                 } else {
-                    Log.e(TAG, "Error en la llamada de usuario: ${responseUsers.code()} - ${responseUsers.message()}")
+                    Log.e(
+                        TAG,
+                        "Error en la llamada de usuario: ${responseUsers.code()} - ${responseUsers.message()}"
+                    )
                 }
 
 
-                Log.i(TAG, "----------------------------------------------------------------------------------------------------")
+                Log.i(
+                    TAG,
+                    "----------------------------------------------------------------------------------------------------"
+                )
                 val response = RetrofitClient.api.getUserAccount()
 
 
@@ -119,7 +132,10 @@ class MainActivity : ComponentActivity() {
                         Log.i(TAG, "Número de transacciones: ${userAccount.transactions.size}")
 
                         if (userAccount.transactions.isNotEmpty()) {
-                            Log.i(TAG, "Primera transacción: ${userAccount.transactions[0].description}")
+                            Log.i(
+                                TAG,
+                                "Primera transacción: ${userAccount.transactions[0].description}"
+                            )
                         }
 
                     } else {

@@ -34,10 +34,7 @@ fun ButtonLog(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 65.dp)
-            .height(50.dp),
+        modifier = modifier,
         shape = RoundedCornerShape(50.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = backgroundColor,
