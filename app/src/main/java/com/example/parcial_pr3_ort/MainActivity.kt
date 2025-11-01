@@ -8,12 +8,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import com.example.parcial_pr3_ort.api.RetrofitClient
+import com.example.parcial_pr3_ort.ui.screens.AppScaffold
 import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
 import kotlinx.coroutines.launch
 
@@ -26,11 +28,8 @@ class MainActivity : ComponentActivity() {
         testApi()
         setContent {
             PARCIALPR3ORTTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    AppScaffold() // << ESTE ES EL PUNTO DE ENTRADA AHORA
                 }
             }
         }
@@ -144,6 +143,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     PARCIALPR3ORTTheme {
-        Greeting("Android")
+        AppScaffold()
     }
 }

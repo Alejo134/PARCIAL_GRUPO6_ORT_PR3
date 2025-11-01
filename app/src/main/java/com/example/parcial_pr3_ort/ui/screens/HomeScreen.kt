@@ -61,13 +61,9 @@ fun HomeScreen() {
 
     var selectedPeriod by remember { mutableStateOf(TimePeriod.Weekly) }
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        containerColor = CaribbeanGreen
-    ) { innerPadding ->
+
         Column(
             modifier = Modifier
-                .padding(innerPadding) // 1. Mantenemos solo el padding del Scaffold
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -187,7 +183,7 @@ fun HomeScreen() {
             }
         }
     }
-}
+
 
 
 
