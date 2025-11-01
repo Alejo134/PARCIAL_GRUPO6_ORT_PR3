@@ -46,11 +46,11 @@ fun TransactionCard(
 
     // 1. Lógica del Ícono: Se decide basado en el `subtype`.
     val iconResId = when (subtype.lowercase()) {
-        "grocery" -> R.drawable.categorygrocery
-        "salary" -> R.drawable.categorysalary
-        "rent" -> R.drawable.categorysalary
+        "food" -> R.drawable.foodcategory
+        "clothes" -> R.drawable.clothescategory
+        "savings" -> R.drawable.categorysalary
         // Añade más casos para otros subtipos de tu API.
-        else -> R.drawable.ic_launcher_foreground // Ícono por defecto si no se encuentra coincidencia.
+        else -> R.drawable.categorysalary // Ícono por defecto si no se encuentra coincidencia.
     }
 
     // 2. Lógica del Monto: Se formatea basado en el `type`.
@@ -69,7 +69,7 @@ fun TransactionCard(
 
         // --- SECCIÓN IZQUIERDA: ÍCONO Y TEXTOS PRINCIPALES ---
         Row(
-            modifier = Modifier.width(170.dp),
+            modifier = Modifier.width(160.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -97,7 +97,6 @@ fun TransactionCard(
             }
         }
 
-        Spacer(modifier = Modifier.width(14.dp))
         VerticalDivider(modifier = Modifier.height(35.dp))
 
         // --- SECCIÓN CENTRAL: TAMBIÉN USA EL SUBTYPE ---
@@ -116,9 +115,12 @@ fun TransactionCard(
 
         VerticalDivider(modifier = Modifier.height(35.dp))
 
+        Spacer(modifier = Modifier.width(5.dp))
+
+
         // --- SECCIÓN DERECHA: MONTO FORMATEADO ---
         Box(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f).width(40.dp),
             contentAlignment = Alignment.CenterEnd
         ) {
             Text(
