@@ -43,6 +43,8 @@ android {
 dependencies {
 
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.ui.unit)
     val room_version = "2.6.1" // Usa la última versión estable
     implementation("androidx.room:room-runtime:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
