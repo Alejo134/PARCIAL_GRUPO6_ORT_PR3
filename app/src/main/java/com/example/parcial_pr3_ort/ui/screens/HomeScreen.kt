@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,12 +29,11 @@ import androidx.compose.ui.unit.dp
 import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.api.RetrofitClient
 import com.example.parcial_pr3_ort.data.repository.UserAccountRepository
-import com.example.parcial_pr3_ort.ui.components.CategoryProgressBar
+import com.example.parcial_pr3_ort.ui.components.ProgressBar
 import com.example.parcial_pr3_ort.ui.components.FinancialInfoCard
 import com.example.parcial_pr3_ort.ui.components.GoalsCard
 import com.example.parcial_pr3_ort.ui.components.PeriodSelector
 import com.example.parcial_pr3_ort.ui.components.TimePeriod
-import com.example.parcial_pr3_ort.ui.theme.CaribbeanGreen
 import com.example.parcial_pr3_ort.ui.theme.Honeydew
 import com.example.parcial_pr3_ort.ui.theme.LightGreen
 import com.example.parcial_pr3_ort.ui.theme.OceanBlue
@@ -103,9 +101,10 @@ fun HomeScreen() {
             Spacer(modifier = Modifier.height(3.dp))
 
             // 4. Barra de progreso con los parámetros especificados
-            CategoryProgressBar(
+            ProgressBar(
                 categoryName = "30% of your expenses, looks good.",
                 currentValue = 20000.0,
+                colorProgressBar = Honeydew,
                 // 2.2 APLICAMOS EL PADDING HORIZONTAL TAMBIÉN AQUÍ
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
