@@ -1,15 +1,16 @@
+# Archivos de Build (lo más importante)
+/build
+/app/build
+
+# Archivos de IDE y configuración local
 *.iml
 .gradle
 /local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+/.idea/
+/.kotlin/
+
+# Otros
 .DS_Store
-/build
 /captures
 .externalNativeBuild
 .cxx
-local.properties

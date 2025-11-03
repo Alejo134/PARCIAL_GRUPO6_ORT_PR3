@@ -38,6 +38,11 @@ android {
     buildFeatures {
         compose = true
     }
+    packagingOptions {
+        resources.excludes.add("META-INF/INDEX.LIST")
+        resources.excludes.add("META-INF/DEPENDENCIES")
+        resources.excludes.add("META-INF/io.netty.versions.properties")
+    }
 }
 dependencies {
 
@@ -107,6 +112,10 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation(libs.firebase.appdistribution.gradle)
+    implementation(libs.androidx.room.common.jvm)
+    implementation(libs.androidx.runtime)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.3")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

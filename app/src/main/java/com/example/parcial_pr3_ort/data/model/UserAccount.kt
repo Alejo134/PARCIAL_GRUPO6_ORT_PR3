@@ -17,5 +17,5 @@ data class UserAccount(
 
     // lista que contiene objetos de otra data class
     @SerializedName("transactions")
-    val transactions: List<Transaction>
+    val transactions: List<com.example.parcial_pr3_ort.data.dao.Transaction>
 )
