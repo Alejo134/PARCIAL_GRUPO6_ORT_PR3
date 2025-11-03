@@ -1,20 +1,24 @@
 package com.example.parcial_pr3_ort.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -23,6 +27,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.ui.components.AppPasswordTextField
 import com.example.parcial_pr3_ort.ui.components.AppTextField
@@ -30,11 +35,36 @@ import com.example.parcial_pr3_ort.ui.components.ButtonLog
 import com.example.parcial_pr3_ort.ui.components.OnboardingScreenLayout
 import com.example.parcial_pr3_ort.ui.components.SocialLoginButton
 import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
+import com.example.parcial_pr3_ort.ui.viewmodels.LoginViewModel
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
+    val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
+    val isLoading = uiState is LoginUIState.Loading
+
+    LaunchedEffect(uiState) {
+        when (val state = uiState) {
+            is LoginUIState.Success -> {
+                Toast.makeText(
+                    context,
+                    "Login OK. Token: ${state.response.token}",
+                    Toast.LENGTH_LONG
+                ).show()
+                // TODO: Aquí iría la navegación a la pantalla de Home
+                viewModel.resetState()
+            }
+
+            is LoginUIState.Error -> {
+                Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
+                viewModel.resetState()
+            }
+
+            else -> {}
+        }
+    }
 
     OnboardingScreenLayout(
         topScreenWeight = 0.22f,
@@ -70,9 +100,17 @@ fun LoginScreen() {
                 stringId = R.string.log_in,
                 backgroundColor = MaterialTheme.colorScheme.primary,
                 textColor = MaterialTheme.colorScheme.onPrimary,
-                onClick = { /* TODO: Lógica de Login */ }
+                onClick = { viewModel.login(email, password) },
+                enabled = !isLoading
             )
 
+            if (isLoading) {
+                Spacer(modifier = Modifier.height(16.dp))
+                CircularProgressIndicator(
+                    modifier = Modifier.size(32.dp),
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
             Spacer(modifier = Modifier.height(16.dp))
 
             ClickableText(
@@ -92,7 +130,8 @@ fun LoginScreen() {
                 stringId = R.string.sign_up,
                 backgroundColor = MaterialTheme.colorScheme.secondary,
                 textColor = MaterialTheme.colorScheme.onSecondary,
-                onClick = { /* TODO: Navegar a Sign Up */ }
+                onClick = { /* TODO: Navegar a Sign Up */ },
+                enabled = !isLoading
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -140,7 +179,7 @@ fun LoginScreen() {
                 SocialLoginButton(
                     iconResId = R.drawable.ic_google,
                     contentDescResId = R.string.google_logo_desc,
-                    onClick = {   }
+                    onClick = { }
                 )
             }
 

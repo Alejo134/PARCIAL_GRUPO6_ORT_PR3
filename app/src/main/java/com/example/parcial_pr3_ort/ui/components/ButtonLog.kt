@@ -30,11 +30,13 @@ fun ButtonLog(
     backgroundColor: Color,
     textColor: Color,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
 ) {
     Button(
         onClick = onClick,
         modifier = modifier,
+        enabled = enabled,
         shape = RoundedCornerShape(50.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = backgroundColor,

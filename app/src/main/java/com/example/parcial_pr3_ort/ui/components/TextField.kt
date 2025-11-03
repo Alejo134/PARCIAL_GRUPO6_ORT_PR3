@@ -29,7 +29,8 @@ fun AppTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    keyboardType: KeyboardType = KeyboardType.Text
+    keyboardType: KeyboardType = KeyboardType.Text,
+    enabled: Boolean = true
 ) {
     Column(
         modifier = modifier
@@ -50,6 +51,7 @@ fun AppTextField(
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text(stringResource(id = placeholderResId)) },
             shape = RoundedCornerShape(26.dp),
+            enabled = enabled,
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondary,
                 unfocusedContainerColor = MaterialTheme.colorScheme.secondary,

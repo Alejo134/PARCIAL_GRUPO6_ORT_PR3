@@ -1,21 +1,27 @@
 package com.example.parcial_pr3_ort.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -25,15 +31,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.ui.components.AppPasswordTextField
 import com.example.parcial_pr3_ort.ui.components.AppTextField
 import com.example.parcial_pr3_ort.ui.components.ButtonLog
 import com.example.parcial_pr3_ort.ui.components.OnboardingScreenLayout
 import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
+import com.example.parcial_pr3_ort.ui.viewmodels.CreateAccountViewModel
 
 @Composable
-fun CreateAccountScreen() {
+fun CreateAccountScreen(viewModel: CreateAccountViewModel = viewModel()) {
 
     var fullName by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
@@ -41,6 +49,28 @@ fun CreateAccountScreen() {
     var dob by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var confirmPassword by rememberSaveable { mutableStateOf("") }
+
+    val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
+    val isLoading = uiState is CreateAccountUIState.Loading
+
+    LaunchedEffect(uiState) {
+        when (val state = uiState) {
+            is CreateAccountUIState.Success -> {
+                Toast.makeText(context, "Cuenta Creada! ID: ${state.user.id}", Toast.LENGTH_LONG)
+                    .show()
+                // TODO:  navegación a la pantalla de Home o Login
+                viewModel.resetState()
+            }
+
+            is CreateAccountUIState.Error -> {
+                Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
+                viewModel.resetState()
+            }
+
+            else -> {}
+        }
+    }
 
     OnboardingScreenLayout(
         topScreenWeight = 0.22f,
@@ -64,7 +94,8 @@ fun CreateAccountScreen() {
                     placeholderResId = R.string.full_name_placeholder,
                     value = fullName,
                     onValueChange = { fullName = it },
-                    keyboardType = KeyboardType.Text
+                    keyboardType = KeyboardType.Text,
+                    enabled = !isLoading
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -74,7 +105,8 @@ fun CreateAccountScreen() {
                     placeholderResId = R.string.username_placeholder,
                     value = email,
                     onValueChange = { email = it },
-                    keyboardType = KeyboardType.Email
+                    keyboardType = KeyboardType.Email,
+                    enabled = !isLoading
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -84,7 +116,8 @@ fun CreateAccountScreen() {
                     placeholderResId = R.string.mobile_number_placeholder,
                     value = mobile,
                     onValueChange = { mobile = it },
-                    keyboardType = KeyboardType.Phone
+                    keyboardType = KeyboardType.Phone,
+                    enabled = !isLoading
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -94,7 +127,8 @@ fun CreateAccountScreen() {
                     placeholderResId = R.string.date_of_birth_placeholder,
                     value = dob,
                     onValueChange = { dob = it },
-                    keyboardType = KeyboardType.Number
+                    keyboardType = KeyboardType.Number,
+                    enabled = !isLoading
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -102,7 +136,8 @@ fun CreateAccountScreen() {
                 AppPasswordTextField(
                     labelResId = R.string.password,
                     value = password,
-                    onValueChange = { password = it }
+                    onValueChange = { password = it },
+                    enabled = !isLoading
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -110,7 +145,8 @@ fun CreateAccountScreen() {
                 AppPasswordTextField(
                     labelResId = R.string.confirm_password,
                     value = confirmPassword,
-                    onValueChange = { confirmPassword = it }
+                    onValueChange = { confirmPassword = it },
+                    enabled = !isLoading
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
@@ -160,8 +196,29 @@ fun CreateAccountScreen() {
                     stringId = R.string.sign_up,
                     backgroundColor = MaterialTheme.colorScheme.primary,
                     textColor = MaterialTheme.colorScheme.onPrimary,
-                    onClick = { /* TODO: Lógica de Crear Cuenta */ }
+                    onClick = {
+                        if (password != confirmPassword) {
+                            Toast.makeText(
+                                context,
+                                "Las contraseñas no coinciden",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else if (isLoading) {
+                            // No hacer nada si ya está cargando
+                        } else {
+                            viewModel.createAccount(fullName, email, mobile, dob, password)
+                        }
+                    },
+                    enabled = !isLoading
                 )
+
+                if (isLoading) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(32.dp),
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(24.dp))
 

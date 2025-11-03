@@ -37,7 +37,8 @@ fun AppPasswordTextField(
     @StringRes labelResId: Int,
     value: String,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
 ) {
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
@@ -59,6 +60,7 @@ fun AppPasswordTextField(
             onValueChange = onValueChange,
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(26.dp),
+            enabled = enabled,
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondary,
                 unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
