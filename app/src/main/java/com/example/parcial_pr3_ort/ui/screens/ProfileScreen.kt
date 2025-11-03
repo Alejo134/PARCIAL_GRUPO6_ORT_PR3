@@ -3,47 +3,29 @@
 package com.example.parcial_pr3_ort.ui.screens
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.parcial_pr3_ort.R
-import com.example.parcial_pr3_ort.data.model.profile.ProfileBankAccount
-import com.example.parcial_pr3_ort.data.model.profile.ProfileCreditCard
-import com.example.parcial_pr3_ort.data.model.profile.ProfileTransactions
-import com.example.parcial_pr3_ort.data.model.profile.ProfileTxItem
-import com.example.parcial_pr3_ort.data.model.profile.UserProfile
+import com.example.parcial_pr3_ort.data.model.profile.*
+import com.example.parcial_pr3_ort.ui.theme.Honeydew
+import com.example.parcial_pr3_ort.ui.theme.OceanBlue
+import com.example.parcial_pr3_ort.ui.theme.CaribbeanGreen
+import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
 import com.example.parcial_pr3_ort.viewmodel.ProfileUiState
 import com.example.parcial_pr3_ort.viewmodel.ProfileViewModel
 import java.text.NumberFormat
@@ -55,19 +37,16 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = viewModel(),
     userId: Int = 12345
 ) {
-    // Carga inicial
     LaunchedEffect(userId) { viewModel.load(userId) }
-
     val state by viewModel.uiState.collectAsState()
 
-    Scaffold(
-        topBar = { TopAppBar(title = { Text("Profile") }) }
-    ) { padding ->
+    // Sin TopAppBar para calcar la estética del Home (header verde grande)
+    Scaffold { padding ->
         when (state) {
-            is ProfileUiState.Loading -> androidx.compose.foundation.layout.Box(
+            is ProfileUiState.Loading -> Box(
                 Modifier.fillMaxSize().padding(padding),
                 contentAlignment = Alignment.Center
-            ) { androidx.compose.material3.CircularProgressIndicator() }
+            ) { CircularProgressIndicator() }
 
             is ProfileUiState.Error -> {
                 val msg = (state as ProfileUiState.Error).message
@@ -89,39 +68,118 @@ fun ProfileScreen(
     }
 }
 
-/* ===================== Secciones UI ===================== */
+/* ===================== CONTENT ===================== */
 
 @Composable
-private fun HeaderSection(name: String, email: String) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxSize()
+private fun ProfileContent(
+    data: UserProfile,
+    contentPadding: PaddingValues = PaddingValues(0.dp)
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(contentPadding)
     ) {
-        Icon(
-            imageVector = Icons.Filled.AccountCircle,
-            contentDescription = "Avatar",
-            modifier = Modifier.size(72.dp)
-        )
-        Spacer(Modifier.padding(8.dp))
-        Column {
-            Text(name, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-            Text(email, style = MaterialTheme.typography.bodyMedium)
+        // Header verde (como en Home)
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(CaribbeanGreen)
+                .padding(vertical = 24.dp, horizontal = 16.dp)
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.AccountCircle,
+                    contentDescription = "Avatar",
+                    modifier = Modifier.size(72.dp),
+                    tint = Honeydew
+                )
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    data.name,
+                    color = Honeydew,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    data.email,
+                    color = Honeydew,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Spacer(Modifier.height(12.dp))
+                Text(
+                    "Balance: ${formatArs(data.balance)}",
+                    color = Honeydew,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+        }
+
+        // Panel inferior menta con cards blancas
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(topStart = 60.dp, topEnd = 60.dp))
+                .background(Honeydew)
+        ) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                item {
+                    CreditCardSection(
+                        cardholder = data.creditCard.cardholderName,
+                        numberMasked = maskCard(data.creditCard.cardNumber),
+                        exp = data.creditCard.expirationDate,
+                        limit = data.creditCard.creditLimit,
+                        current = data.creditCard.currentBalance,
+                        available = data.creditCard.availableBalance
+                    )
+                }
+                item {
+                    BankAccountSection(
+                        bankName = data.bankAccount.bankName,
+                        type = data.bankAccount.accountType,
+                        cvu = data.bankAccount.cvu,
+                        alias = data.bankAccount.alias,
+                        currency = data.bankAccount.currency
+                    )
+                }
+
+                item { SectionTitle("Credit card transactions") }
+                items(data.transactions.creditCardTransactions.take(3)) { tx ->
+                    TransactionRow(tx)
+                }
+
+                item { SectionTitle("Bank account transactions") }
+                items(data.transactions.bankAccountTransactions.take(3)) { tx ->
+                    TransactionRow(tx)
+                }
+
+                item {
+                    SettingsList(
+                        onEditProfile = { /* navController.navigate("edit_profile") */ },
+                        onNotifications = { /* navController.navigate("notifications") */ },
+                        onSecurity = { /* navController.navigate("security") */ },
+                        onLanguage = { /* navController.navigate("language") */ },
+                        onLogout = { /* navController.navigate("login") { popUpTo(0) } */ }
+                    )
+                }
+            }
         }
     }
 }
 
-@Composable
-private fun BalanceCard(balance: Double) {
-    ElevatedCard {
-        Column(Modifier.padding(16.dp)) {
-            Text("Balance", style = MaterialTheme.typography.labelLarge)
-            Text(
-                formatArs(balance),
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
-    }
+/* ===================== SECCIONES UI ===================== */
+
+@Composable private fun SectionTitle(text: String) {
+    Text(text, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
 }
 
 @Composable
@@ -133,7 +191,12 @@ private fun CreditCardSection(
     current: Double,
     available: Double
 ) {
-    ElevatedCard {
+    ElevatedCard(
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        shape = MaterialTheme.shapes.large
+    ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Text("Credit card", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
             Text("$cardholder • $numberMasked • exp $exp", style = MaterialTheme.typography.bodyMedium)
@@ -153,7 +216,12 @@ private fun BankAccountSection(
     alias: String,
     currency: String
 ) {
-    ElevatedCard {
+    ElevatedCard(
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        shape = MaterialTheme.shapes.large
+    ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Text("Bank account", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
             Text("$bankName • $type • $currency", style = MaterialTheme.typography.bodyMedium)
@@ -163,17 +231,21 @@ private fun BankAccountSection(
     }
 }
 
-@Composable private fun SectionTitle(text: String) {
-    Text(text, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-}
-
 @Composable
 private fun TransactionRow(tx: ProfileTxItem) {
     val sign = if (tx.type.lowercase() == "debit") "-" else "+"
+    val amountColor = if (tx.type.lowercase() == "debit") OceanBlue else CaribbeanGreen
+
     ListItem(
         headlineContent = { Text(tx.description) },
         supportingContent = { Text(tx.date) },
-        trailingContent = { Text("$sign ${formatArs(tx.amount)}", fontWeight = FontWeight.SemiBold) }
+        trailingContent = {
+            Text(
+                "$sign ${formatArs(tx.amount)}",
+                fontWeight = FontWeight.SemiBold,
+                color = amountColor
+            )
+        }
     )
     Divider()
 }
@@ -186,7 +258,12 @@ private fun SettingsList(
     onLanguage: () -> Unit,
     onLogout: () -> Unit
 ) {
-    ElevatedCard {
+    ElevatedCard(
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        shape = MaterialTheme.shapes.large
+    ) {
         Column {
             SettingsItem("Edit profile", onEditProfile)
             SettingsItem("Notifications", onNotifications)
@@ -206,7 +283,7 @@ private fun SettingsItem(text: String, onClick: () -> Unit) {
     Divider()
 }
 
-/* ===================== Utilidades ===================== */
+/* ===================== UTILIDADES ===================== */
 
 @Composable
 private fun ErrorState(
@@ -240,7 +317,7 @@ private fun maskCard(number: String): String {
 @Composable
 private fun KeyValue(key: String, value: String) {
     Row(
-        Modifier.fillMaxSize(),
+        Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(key, style = MaterialTheme.typography.bodyMedium)
@@ -248,62 +325,30 @@ private fun KeyValue(key: String, value: String) {
     }
 }
 
-/* ===================== CONTENT + PREVIEW ===================== */
+/* ===================== PREVIEWS ===================== */
 
+@Preview(showBackground = true, name = "Profile - Light")
 @Composable
-private fun ProfileContent(
-    data: UserProfile,
-    contentPadding: PaddingValues = PaddingValues(0.dp)
-) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(contentPadding)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        item { HeaderSection(name = data.name, email = data.email) }
-        item { BalanceCard(balance = data.balance) }
-        item {
-            CreditCardSection(
-                cardholder = data.creditCard.cardholderName,
-                numberMasked = maskCard(data.creditCard.cardNumber),
-                exp = data.creditCard.expirationDate,
-                limit = data.creditCard.creditLimit,
-                current = data.creditCard.currentBalance,
-                available = data.creditCard.availableBalance
-            )
-        }
-        item {
-            BankAccountSection(
-                bankName = data.bankAccount.bankName,
-                type = data.bankAccount.accountType,
-                cvu = data.bankAccount.cvu,
-                alias = data.bankAccount.alias,
-                currency = data.bankAccount.currency
-            )
-        }
-        item { SectionTitle("Credit card transactions") }
-        items(data.transactions.creditCardTransactions.take(3)) { tx ->
-            TransactionRow(tx)
-        }
-        item { SectionTitle("Bank account transactions") }
-        items(data.transactions.bankAccountTransactions.take(3)) { tx ->
-            TransactionRow(tx)
-        }
-        item {
-            SettingsList(
-                onEditProfile = { },
-                onNotifications = { },
-                onSecurity = { },
-                onLanguage = { },
-                onLogout = { }
-            )
-        }
+private fun ProfileScreenPreview_Light() {
+    PARCIALPR3ORTTheme {
+        Surface { ProfileContent(sampleUserProfile()) }
     }
 }
 
-// Mocks para preview
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    name = "Profile - Dark"
+)
+@Composable
+private fun ProfileScreenPreview_Dark() {
+    PARCIALPR3ORTTheme {
+        Surface { ProfileContent(sampleUserProfile()) }
+    }
+}
+
+/* ===== MOCK DATA PARA PREVIEW ===== */
+
 private fun sampleUserProfile(): UserProfile =
     UserProfile(
         userId = "12345",
@@ -339,23 +384,3 @@ private fun sampleUserProfile(): UserProfile =
             )
         )
     )
-
-@Preview(showBackground = true, name = "Profile - Light")
-@Composable
-private fun ProfileScreenPreview_Light() {
-    MaterialTheme {
-        ProfileContent(sampleUserProfile())
-    }
-}
-
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    name = "Profile - Dark"
-)
-@Composable
-private fun ProfileScreenPreview_Dark() {
-    MaterialTheme {
-        ProfileContent(sampleUserProfile())
-    }
-}
