@@ -44,7 +44,6 @@ fun AppPasswordTextField(
 
     Column(
         modifier = modifier
-            .height(60.dp)
             .padding(horizontal = 15.dp)
     ) {
         Text(

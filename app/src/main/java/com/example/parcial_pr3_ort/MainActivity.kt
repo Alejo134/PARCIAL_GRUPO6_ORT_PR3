@@ -34,8 +34,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    //LoginScreen()
-    CreateAccountScreen()
+    LoginScreen()
+    //CreateAccountScreen()
 }
 
 @Preview(showBackground = true)
