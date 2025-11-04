@@ -5,21 +5,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth // Cambiado de fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color // Importa Color
-import androidx.compose.ui.tooling.preview.Preview // Para previsualizar
 import androidx.compose.ui.unit.dp
 import com.example.parcial_pr3_ort.R
+import com.example.parcial_pr3_ort.ui.theme.FenceGreen
 import com.example.parcial_pr3_ort.ui.theme.Honeydew
 import com.example.parcial_pr3_ort.ui.theme.LightGreen
 import com.example.parcial_pr3_ort.ui.theme.OceanBlue
-import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
 
 /**
  * Un componente de UI "tonto" que muestra información financiera y una barra de progreso.
@@ -75,7 +73,8 @@ fun TopPageFinancial_ProgressBar(
             categoryName = "30% of your expenses, looks good.",
             currentValue = 20000.0,
             modifier = Modifier.padding(horizontal = 16.dp),
-            colorProgressBar = Honeydew
+            colorProgressBar = Honeydew,
+            colorIcon = FenceGreen
         )
 
         Spacer(modifier = Modifier.height(25.dp))

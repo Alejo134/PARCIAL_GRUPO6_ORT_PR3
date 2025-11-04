@@ -1,12 +1,10 @@
 package com.example.parcial_pr3_ort.ui.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -24,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.parcial_pr3_ort.R // Asegúrate de que este import sea correcto
+import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.data.entity.EntityTransaction
 import com.example.parcial_pr3_ort.ui.theme.OceanBlue
 import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
