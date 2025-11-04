@@ -3,18 +3,6 @@ package com.example.parcial_pr3_ort.ui.navigation
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
-import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
-import androidx.navigation.navigation
-import com.example.parcial_pr3_ort.ui.screens.AppRoutes
-import com.example.parcial_pr3_ort.ui.screens.HomeScreen
-import com.example.parcial_pr3_ort.ui.screens.NotificationsScreen
-import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
@@ -22,35 +10,32 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import com.example.parcial_pr3_ort.ui.components.AppNavigationBar
 import com.example.parcial_pr3_ort.ui.components.MainTopAppBar
+import com.example.parcial_pr3_ort.ui.screens.AccountBalanceScreen
 import com.example.parcial_pr3_ort.ui.screens.AddExpensesScreen
 import com.example.parcial_pr3_ort.ui.screens.AddSavingsScreen
+import com.example.parcial_pr3_ort.ui.screens.AppRoutes
 import com.example.parcial_pr3_ort.ui.screens.CategoriesScreen
 import com.example.parcial_pr3_ort.ui.screens.EntertainmentCatScreen
 import com.example.parcial_pr3_ort.ui.screens.FoodCatScreen
 import com.example.parcial_pr3_ort.ui.screens.GiftsCatScreen
 import com.example.parcial_pr3_ort.ui.screens.GroceriesCatScreen
+import com.example.parcial_pr3_ort.ui.screens.HomeScreen
 import com.example.parcial_pr3_ort.ui.screens.MedicineCatScreen
+import com.example.parcial_pr3_ort.ui.screens.NotificationsScreen
 import com.example.parcial_pr3_ort.ui.screens.RentCatScreen
+import com.example.parcial_pr3_ort.ui.screens.TransactionScreen
 import com.example.parcial_pr3_ort.ui.screens.TransportCatScreen
 import com.example.parcial_pr3_ort.ui.screens.categories_screens.SavingsCatScreen
-import com.example.parcial_pr3_ort.ui.screens.launch.CreateAccountScreen
-import com.example.parcial_pr3_ort.ui.screens.launch.ForgotPasswordScreen
-import com.example.parcial_pr3_ort.ui.screens.launch.LoginScreen
-import com.example.parcial_pr3_ort.ui.screens.launch.NewPasswordScreen
-import com.example.parcial_pr3_ort.ui.screens.launch.OnboardingScreen
-import com.example.parcial_pr3_ort.ui.screens.launch.PasswordChangedScreen
-import com.example.parcial_pr3_ort.ui.screens.launch.PreWelcomeScreen
-import com.example.parcial_pr3_ort.ui.screens.launch.SecurityPinScreen
-import com.example.parcial_pr3_ort.ui.screens.launch.SplashScreen
 import com.example.parcial_pr3_ort.ui.screens.saving_screens.CarScreen
 import com.example.parcial_pr3_ort.ui.screens.saving_screens.NewHouseScreen
 import com.example.parcial_pr3_ort.ui.screens.saving_screens.TravelScreen
@@ -140,6 +125,14 @@ fun MainScaffold(rootNavController: NavHostController) {
                 popExitTransition = { slideOutVertically(targetOffsetY = { it }) }) {
                 NotificationsScreen()
             }
+            composable(AppRoutes.ACCOUNT_BALANCE) {
+                AccountBalanceScreen()
+            }
+
+            composable(AppRoutes.TRANSACTION_SCREEN) {
+                TransactionScreen()
+            }
+
 
             navigation(
                 startDestination = AppRoutes.CATEGORIES,

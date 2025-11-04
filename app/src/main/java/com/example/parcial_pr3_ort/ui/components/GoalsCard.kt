@@ -1,8 +1,5 @@
 package com.example.parcial_pr3_ort.ui.components
 
-import androidx.compose.foundation.layout.fillMaxSize
-import com.example.parcial_pr3_ort.ui.theme.FenceGreen
-
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -34,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.ui.theme.CaribbeanGreen
+import com.example.parcial_pr3_ort.ui.theme.FenceGreen
 import com.example.parcial_pr3_ort.ui.theme.Honeydew
 import com.example.parcial_pr3_ort.ui.theme.OceanBlue
 import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme

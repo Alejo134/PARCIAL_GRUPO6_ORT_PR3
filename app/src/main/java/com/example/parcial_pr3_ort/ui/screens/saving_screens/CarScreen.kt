@@ -2,7 +2,17 @@ package com.example.parcial_pr3_ort.ui.screens.saving_screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -21,16 +31,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.parcial_pr3_ort.R
-import com.example.parcial_pr3_ort.api.RetrofitClient
 import com.example.parcial_pr3_ort.data.AppDataBase
 import com.example.parcial_pr3_ort.data.TransactionRepository
-import com.example.parcial_pr3_ort.data.repository.UserAccountRepository
 import com.example.parcial_pr3_ort.ui.components.ButtonAddExpenses
 import com.example.parcial_pr3_ort.ui.components.ProgressBar
 import com.example.parcial_pr3_ort.ui.components.TransactionCategory
@@ -40,10 +47,6 @@ import com.example.parcial_pr3_ort.ui.theme.FenceGreen
 import com.example.parcial_pr3_ort.ui.theme.Honeydew
 import com.example.parcial_pr3_ort.viewmodel.CategoryDetailViewModel
 import com.example.parcial_pr3_ort.viewmodel.CategoryDetailViewModelFactory
-import com.example.parcial_pr3_ort.viewmodel.HomeViewModel
-import com.example.parcial_pr3_ort.viewmodel.HomeViewModelFactory
-import kotlin.collections.component1
-import kotlin.collections.component2
 
 // He creado este componente reutilizable para la sección del título con ícono
 // Esto hace que el código sea más limpio y evita la repetición.
@@ -163,7 +166,8 @@ fun CarScreen(navController: NavController) {
             ProgressBar(
                 categoryName = "30% of your expenses, looks good.",
                 currentValue = 1962.93,
-                colorProgressBar = CaribbeanGreen
+                colorProgressBar = CaribbeanGreen,
+                colorIcon = FenceGreen,
             )
 
 

@@ -26,22 +26,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.api.RetrofitClient
 import com.example.parcial_pr3_ort.data.repository.UserAccountRepository
-import com.example.parcial_pr3_ort.ui.components.ProgressBar
 import com.example.parcial_pr3_ort.ui.components.FinancialInfoCard
 import com.example.parcial_pr3_ort.ui.components.GoalsCard
 import com.example.parcial_pr3_ort.ui.components.PeriodSelector
+import com.example.parcial_pr3_ort.ui.components.ProgressBar
 import com.example.parcial_pr3_ort.ui.components.TimePeriod
+import com.example.parcial_pr3_ort.ui.components.TransactionCard
+import com.example.parcial_pr3_ort.ui.theme.FenceGreen
 import com.example.parcial_pr3_ort.ui.theme.Honeydew
 import com.example.parcial_pr3_ort.ui.theme.LightGreen
 import com.example.parcial_pr3_ort.ui.theme.OceanBlue
 import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
 import com.example.parcial_pr3_ort.viewmodel.HomeViewModel
 import com.example.parcial_pr3_ort.viewmodel.HomeViewModelFactory
-import androidx.lifecycle.viewmodel.compose.viewModel // <<< ¡AÑADE ESTE IMPORT!
-import com.example.parcial_pr3_ort.ui.components.TransactionCard
 
 @Composable
 fun HomeScreen() {
@@ -106,7 +107,8 @@ fun HomeScreen() {
                 currentValue = 20000.0,
                 colorProgressBar = Honeydew,
                 // 2.2 APLICAMOS EL PADDING HORIZONTAL TAMBIÉN AQUÍ
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
+                colorIcon = FenceGreen,
             )
 
             Spacer(modifier = Modifier.height(55.dp))
@@ -114,7 +116,7 @@ fun HomeScreen() {
             // 5. Contenedor inferior sin padding
             Box(
                 modifier = Modifier
-                    .fillMaxSize() // Ahora ocupará todo el espacio restante SIN márgenes
+                    .fillMaxSize()
                     .clip(
                         RoundedCornerShape(
                             topStart = 60.dp,

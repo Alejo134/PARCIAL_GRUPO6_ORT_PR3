@@ -1,24 +1,15 @@
 package com.example.parcial_pr3_ort.ui.screens
 
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.example.parcial_pr3_ort.ui.components.AppNavigationBar
-import com.example.parcial_pr3_ort.ui.components.MainTopAppBar
 import com.example.parcial_pr3_ort.ui.navigation.mainNavGraph
-import com.example.parcial_pr3_ort.ui.screens.categories_screens.SavingsCatScreen
 import com.example.parcial_pr3_ort.ui.screens.launch.CreateAccountScreen
 import com.example.parcial_pr3_ort.ui.screens.launch.ForgotPasswordScreen
 import com.example.parcial_pr3_ort.ui.screens.launch.LoginScreen
@@ -28,11 +19,6 @@ import com.example.parcial_pr3_ort.ui.screens.launch.PasswordChangedScreen
 import com.example.parcial_pr3_ort.ui.screens.launch.PreWelcomeScreen
 import com.example.parcial_pr3_ort.ui.screens.launch.SecurityPinScreen
 import com.example.parcial_pr3_ort.ui.screens.launch.SplashScreen
-import com.example.parcial_pr3_ort.ui.screens.saving_screens.CarScreen
-import com.example.parcial_pr3_ort.ui.screens.saving_screens.NewHouseScreen
-import com.example.parcial_pr3_ort.ui.screens.saving_screens.TravelScreen
-import com.example.parcial_pr3_ort.ui.screens.saving_screens.WeddingScreen
-import com.example.parcial_pr3_ort.ui.theme.CaribbeanGreen
 
 object AppRoutes {
 
@@ -51,12 +37,15 @@ object AppRoutes {
     const val NEW_PASSWORD = "new_password"
     const val PASSWORD_CHANGED = "password_changed"
 
+    // --- PANTALLAS DEL GRAFO DEL MAIN ---
 
     const val HOME = "home"
     const val NOTIFICATIONS = "notifications"
     const val SETTINGS = "settings"
     const val CATEGORIES = "categories"
+    const val ACCOUNT_BALANCE = "account_balance"
 
+    const val TRANSACTION_SCREEN = "transaction_screen"
     const val CATEGORIES_GRAPH = "categories_graph"
     const val GIFTS_CATEGORY = "gifts_category_screen"
     const val RENT_CATEGORY = "rent_category_screen"

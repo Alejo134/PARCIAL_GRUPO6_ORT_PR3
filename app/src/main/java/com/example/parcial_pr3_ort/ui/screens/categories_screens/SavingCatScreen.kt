@@ -16,17 +16,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.api.RetrofitClient
 import com.example.parcial_pr3_ort.data.repository.UserAccountRepository
+import com.example.parcial_pr3_ort.ui.components.ItemCategories
+import com.example.parcial_pr3_ort.ui.components.TopPageFinancial_ProgressBar
+import com.example.parcial_pr3_ort.ui.screens.AppRoutes
 import com.example.parcial_pr3_ort.ui.theme.Honeydew
 import com.example.parcial_pr3_ort.viewmodel.HomeViewModel
 import com.example.parcial_pr3_ort.viewmodel.HomeViewModelFactory
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.parcial_pr3_ort.ui.components.ItemCategories
-import androidx.navigation.NavController
-import com.example.parcial_pr3_ort.ui.components.TopPageFinancial_ProgressBar
-import com.example.parcial_pr3_ort.ui.screens.AppRoutes
 
 @Composable
 fun SavingsCatScreen(navController: NavController) {

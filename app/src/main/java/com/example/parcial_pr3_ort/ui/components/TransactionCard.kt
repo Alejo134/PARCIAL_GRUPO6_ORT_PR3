@@ -97,6 +97,7 @@ fun TransactionCard(
             }
         }
 
+
         VerticalDivider(modifier = Modifier.height(35.dp))
 
         // --- SECCIÓN CENTRAL: TAMBIÉN USA EL SUBTYPE ---

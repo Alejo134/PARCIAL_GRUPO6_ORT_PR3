@@ -6,30 +6,28 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.ui.screens.AppRoutes
 import com.example.parcial_pr3_ort.ui.theme.CaribbeanGreen
 import com.example.parcial_pr3_ort.ui.theme.FenceGreen
 import com.example.parcial_pr3_ort.ui.theme.Honeydew
 import com.example.parcial_pr3_ort.ui.theme.LightGreen
-import androidx.navigation.NavController // <<< AÑADE ESTE IMPORT
-import androidx.navigation.NavDestination.Companion.hierarchy // <<< AÑADE ESTE IMPORT
-import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun AppNavigationBar(
@@ -49,11 +47,11 @@ fun AppNavigationBar(
         ),
         BottomNavItem(
             icon = painterResource(id = R.drawable.account_balance),
-            route = "add"
+            route = AppRoutes.ACCOUNT_BALANCE
         ),
         BottomNavItem(
             icon = painterResource(id = R.drawable.transactions),
-            route = "add"
+            route = AppRoutes.TRANSACTION_SCREEN
         ),
         BottomNavItem(
             icon = painterResource(id = R.drawable.category),
