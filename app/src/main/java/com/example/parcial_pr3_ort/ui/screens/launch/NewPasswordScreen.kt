@@ -1,4 +1,4 @@
-package com.example.parcial_pr3_ort.ui.screens
+package com.example.parcial_pr3_ort.ui.screens.launch
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
@@ -10,14 +10,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.ui.components.AppPasswordTextField
 import com.example.parcial_pr3_ort.ui.components.ButtonLog
 import com.example.parcial_pr3_ort.ui.components.OnboardingScreenLayout
+import com.example.parcial_pr3_ort.ui.screens.AppRoutes
 import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
 
 @Composable
-fun NewPasswordScreen() {
+fun NewPasswordScreen(navController: NavController) {
 
     var newPassword by rememberSaveable { mutableStateOf("") }
     var confirmPassword by rememberSaveable { mutableStateOf("") }
@@ -58,7 +61,7 @@ fun NewPasswordScreen() {
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
                     .height(50.dp),
-                onClick = { /* TODO: Lógica de cambiar contraseña */ }
+                onClick = { navController.navigate(AppRoutes.PASSWORD_CHANGED) }
             )
         }
     )
@@ -68,6 +71,6 @@ fun NewPasswordScreen() {
 @Composable
 fun NewPasswordScreenPreview() {
     PARCIALPR3ORTTheme {
-        NewPasswordScreen()
+        NewPasswordScreen(navController = rememberNavController())
     }
 }

@@ -7,6 +7,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -14,7 +17,17 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.parcial_pr3_ort.ui.components.AppNavigationBar
 import com.example.parcial_pr3_ort.ui.components.MainTopAppBar
+import com.example.parcial_pr3_ort.ui.navigation.mainNavGraph
 import com.example.parcial_pr3_ort.ui.screens.categories_screens.SavingsCatScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.CreateAccountScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.ForgotPasswordScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.LoginScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.NewPasswordScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.OnboardingScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.PasswordChangedScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.PreWelcomeScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.SecurityPinScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.SplashScreen
 import com.example.parcial_pr3_ort.ui.screens.saving_screens.CarScreen
 import com.example.parcial_pr3_ort.ui.screens.saving_screens.NewHouseScreen
 import com.example.parcial_pr3_ort.ui.screens.saving_screens.TravelScreen
@@ -22,6 +35,23 @@ import com.example.parcial_pr3_ort.ui.screens.saving_screens.WeddingScreen
 import com.example.parcial_pr3_ort.ui.theme.CaribbeanGreen
 
 object AppRoutes {
+
+
+    const val AUTH_GRAPH = "auth_graph"
+    const val MAIN_GRAPH = "main_graph"
+
+    // --- PANTALLAS DEL GRAFO DE AUTENTICACIÓN ---
+    const val LAUNCH = "launch"
+    const val SECONDARY_LAUNCH = "secondary_launch"
+    const val ONBOARDING = "onboarding"
+    const val LOGIN = "login"
+    const val FORGOT_PASSWORD = "forgot_password"
+    const val CREATE_ACCOUNT = "create_account"
+    const val SECURITY_PIN = "security_pin"
+    const val NEW_PASSWORD = "new_password"
+    const val PASSWORD_CHANGED = "password_changed"
+
+
     const val HOME = "home"
     const val NOTIFICATIONS = "notifications"
     const val SETTINGS = "settings"
@@ -49,89 +79,65 @@ object AppRoutes {
 
 }
 
-@Composable
-fun AppScaffold() {
-    val navController = rememberNavController()
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route ?: AppRoutes.HOME
-    val canNavigateBack = navController.previousBackStackEntry != null
-
-    Scaffold(
-        topBar = {
-            MainTopAppBar(
-                currentRoute = currentRoute,
-                canNavigateBack = canNavigateBack,
-                onNavigateBack = { navController.navigateUp() },
-                onNotificationClick = { if (currentRoute != AppRoutes.NOTIFICATIONS) {
-                    navController.navigate(AppRoutes.NOTIFICATIONS)
-                } }
-            )
-        },
-        bottomBar = {
-            AppNavigationBar(
-                navController = navController,
-                onNavItemClick = { route ->
-                    navController.navigate(route) {
-                        popUpTo(navController.graph.startDestinationId) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                }
-            )
-        },
-        containerColor = CaribbeanGreen
-    ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = AppRoutes.HOME,
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            composable(AppRoutes.HOME) {
-                HomeScreen()
-            }
-            composable(
-                route = AppRoutes.NOTIFICATIONS,
-                enterTransition = {
-                    slideInVertically(initialOffsetY = { it })
-                },
-                exitTransition = {
-                    slideOutVertically(targetOffsetY = { it })
-                }
-            ) {
-                NotificationsScreen()
-            }
-
-            navigation(
-                startDestination = AppRoutes.CATEGORIES,
-                route = AppRoutes.CATEGORIES_GRAPH
-            ) {
-
-                composable(AppRoutes.CATEGORIES) {
-                    CategoriesScreen(navController = navController)
-                }
-
-                composable(AppRoutes.SAVINGS_CATEGORY){ SavingsCatScreen(navController = navController) }
-                composable(AppRoutes.FOOD_CATEGORY){ FoodCatScreen(navController = navController) }
-                composable(AppRoutes.TRANSPORT_CATEGORY){ TransportCatScreen(navController = navController) }
-                composable(AppRoutes.MEDICINE_CATEGORY){ MedicineCatScreen(navController = navController) }
-                composable(AppRoutes.GROCERIES_CATEGORY){ GroceriesCatScreen(navController = navController) }
-                composable(AppRoutes.RENT_CATEGORY){ RentCatScreen(navController = navController) }
-                composable(AppRoutes.GIFTS_CATEGORY){ GiftsCatScreen(navController = navController) }
-                composable(AppRoutes.ENTERTAINMENT_CATEGORY){ EntertainmentCatScreen(navController = navController) }
-
-
-                composable(AppRoutes.ADD_EXPENSES){ AddExpensesScreen(navController = navController)}
-                composable(AppRoutes.TRAVEL_CATEGORY){ TravelScreen(navController = navController) }
-                composable(AppRoutes.NEW_HOUSE_CATEGORY){ NewHouseScreen(navController = navController) }
-                composable(AppRoutes.CAR_CATEGORY){ CarScreen(navController = navController) }
-                composable(AppRoutes.WEDDING_CATEGORY){ WeddingScreen(navController = navController) }
-                composable(AppRoutes.ADD_SAVINGS){ AddSavingsScreen(navController = navController)}
-
-            }
+fun NavGraphBuilder.authNavGraph(navController: NavController) {
+    navigation(
+        startDestination = AppRoutes.LAUNCH, // La primera pantalla del flujo
+        route = AppRoutes.AUTH_GRAPH
+    ) {
+        composable(AppRoutes.LAUNCH) {
+            SplashScreen(navController = navController)
+        }
+        composable(AppRoutes.SECONDARY_LAUNCH) {
+            PreWelcomeScreen(navController = navController)
+        }
+        composable(AppRoutes.ONBOARDING) {
+            OnboardingScreen(navController = navController)
+        }
+        composable(AppRoutes.LOGIN) {
+            LoginScreen(navController = navController)
+        }
+        composable(AppRoutes.CREATE_ACCOUNT) {
+            CreateAccountScreen(navController = navController)
+        }
+        composable(AppRoutes.FORGOT_PASSWORD) {
+            ForgotPasswordScreen(navController = navController)
+        }
+        composable(AppRoutes.SECURITY_PIN) {
+            SecurityPinScreen(navController = navController)
+        }
+        composable(AppRoutes.NEW_PASSWORD) {
+            NewPasswordScreen(navController = navController)
+        }
+        composable(AppRoutes.PASSWORD_CHANGED) {
+            PasswordChangedScreen(navController = navController)
         }
     }
 }
+
+
+
+@Composable
+fun RootNavigationGraph() {
+    val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+
+    val isUserLoggedIn = false // <-- CAMBIA A 'true' PARA PROBAR EL FLUJO PRINCIPAL
+        val startDestination = if (isUserLoggedIn) AppRoutes.MAIN_GRAPH else AppRoutes.AUTH_GRAPH
+
+
+        NavHost(
+            navController = navController,
+            startDestination = startDestination
+        ) {
+            // Grafo para el flujo de autenticación (no usa el innerPadding del Scaffold)
+            authNavGraph(navController = navController)
+
+            // Grafo para el flujo principal (SÍ usa el innerPadding)
+            mainNavGraph(rootNavController = navController)
+        }
+    }
+
 
 

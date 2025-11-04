@@ -1,4 +1,4 @@
-package com.example.parcial_pr3_ort.ui.screens
+package com.example.parcial_pr3_ort.ui.screens.launch
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -20,10 +20,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.ui.components.ImageWithCircleBackground
 import com.example.parcial_pr3_ort.ui.components.OnboardingScreenLayout
 import com.example.parcial_pr3_ort.ui.components.PageIndicator
+import com.example.parcial_pr3_ort.ui.screens.AppRoutes
 import com.example.parcial_pr3_ort.ui.theme.Cyprus
 import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
 import kotlinx.coroutines.launch
@@ -49,7 +51,7 @@ private val onboardingPages = listOf(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnboardingScreen() {
+fun OnboardingScreen(navController: NavController) {
 
     val pagerState = rememberPagerState { onboardingPages.size }
     val scope = rememberCoroutineScope()
@@ -91,7 +93,11 @@ fun OnboardingScreen() {
                             if (pagerState.currentPage < onboardingPages.lastIndex) {
                                 pagerState.animateScrollToPage(pagerState.currentPage + 1)
                             } else {
-                                // TODO: Última página, navegar a WelcomeScreen o Login
+                                navController.navigate(AppRoutes.SECONDARY_LAUNCH) {
+                                    popUpTo(AppRoutes.ONBOARDING) {
+                                        inclusive = true
+                                    }
+                                }
                             }
                         }
                     }
@@ -111,10 +117,3 @@ fun OnboardingScreen() {
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun OnboardingScreenPreview() {
-    PARCIALPR3ORTTheme {
-        OnboardingScreen()
-    }
-}

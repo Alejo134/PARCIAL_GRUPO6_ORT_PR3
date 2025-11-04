@@ -1,6 +1,6 @@
-package com.example.parcial_pr3_ort.ui.screens
+package com.example.parcial_pr3_ort.ui.screens.launch
 
-import com.example.parcial_pr3_ort.data.dao.LoginResponse
+import com.example.parcial_pr3_ort.data.model.LoginResponse
 
 sealed interface LoginUIState {
     object Idle : LoginUIState

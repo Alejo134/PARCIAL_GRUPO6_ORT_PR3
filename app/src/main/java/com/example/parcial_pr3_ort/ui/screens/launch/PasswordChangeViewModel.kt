@@ -1,4 +1,4 @@
-package com.example.parcial_pr3_ort.ui.screens
+package com.example.parcial_pr3_ort.ui.screens.launch
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -1,4 +1,4 @@
-package com.example.parcial_pr3_ort.ui.screens
+package com.example.parcial_pr3_ort.ui.screens.launch
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -23,16 +22,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.ui.components.ButtonLog
+import com.example.parcial_pr3_ort.ui.screens.AppRoutes
 import com.example.parcial_pr3_ort.ui.theme.CaribbeanGreen
-import com.example.parcial_pr3_ort.ui.theme.Cyprus
 import com.example.parcial_pr3_ort.ui.theme.Honeydew
 import com.example.parcial_pr3_ort.ui.theme.LightGreen
 import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
 
 @Composable
-fun PreWelcomeScreen() {
+fun PreWelcomeScreen(navController: NavController) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Honeydew
@@ -77,16 +78,17 @@ fun PreWelcomeScreen() {
                 stringId = R.string.log_in,
                 backgroundColor = CaribbeanGreen,
                 textColor = MaterialTheme.colorScheme.onPrimary,
-                onClick = { /* TODO: Log In */ }
+                onClick = { navController.navigate(AppRoutes.LOGIN) }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             ButtonLog(
                 stringId = R.string.sign_up,
-                backgroundColor = MaterialTheme.colorScheme.secondary,
+                backgroundColor = LightGreen,
                 textColor = MaterialTheme.colorScheme.onPrimary,
-                onClick = { /* TODO: Sign Up */ }
+                onClick = { navController.navigate(AppRoutes.CREATE_ACCOUNT)},
+                enabled = true,
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -96,7 +98,7 @@ fun PreWelcomeScreen() {
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f),
-                modifier = Modifier.clickable { /* TODO: Forgot Pass */ }
+                modifier = Modifier.clickable { navController.navigate(AppRoutes.FORGOT_PASSWORD) }
             )
         }
     }
@@ -106,6 +108,7 @@ fun PreWelcomeScreen() {
 @Composable
 fun PreWelcomeScreenPreview() {
     PARCIALPR3ORTTheme {
-        PreWelcomeScreen()
+        // Para que el preview funcione, le pasamos un NavController de prueba que no hace nada.
+        PreWelcomeScreen(navController = rememberNavController())
     }
 }

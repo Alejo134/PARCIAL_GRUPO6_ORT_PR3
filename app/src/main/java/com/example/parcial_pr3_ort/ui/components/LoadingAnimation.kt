@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.parcial_pr3_ort.R
-import com.example.parcial_pr3_ort.ui.screens.PasswordChangeState
+import com.example.parcial_pr3_ort.ui.screens.launch.PasswordChangeState
 
 
 @Composable

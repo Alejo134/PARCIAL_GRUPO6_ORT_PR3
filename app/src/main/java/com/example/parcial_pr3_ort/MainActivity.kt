@@ -15,9 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import com.example.parcial_pr3_ort.api.RetrofitClient
-import com.example.parcial_pr3_ort.ui.screens.AppScaffold
+import com.example.parcial_pr3_ort.ui.screens.RootNavigationGraph
 import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
 import kotlinx.coroutines.launch
+import kotlin.collections.isNotEmpty
 
 class MainActivity : ComponentActivity() {
     private val TAG = "MainActivity"
@@ -29,7 +30,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PARCIALPR3ORTTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    AppScaffold() // << ESTE ES EL PUNTO DE ENTRADA AHORA
+                    RootNavigationGraph() // << ESTE ES EL PUNTO DE ENTRADA AHORA
                 }
             }
         }
@@ -37,40 +38,10 @@ class MainActivity : ComponentActivity() {
 
     private fun testApi() {
         lifecycleScope.launch {
-            try {
-                val loginResponse = RetrofitClient.api.login()
 
-                if (loginResponse.isSuccessful) {
-                    val loginData = loginResponse.body()
-                    Log.i(TAG, "LOGIN EXITOSO:")
-                    // Usamos el operador 'let' para seguridad contra nulos
-                    loginData?.let {
-                        Log.i(TAG, "Token recibido: ${it.token}")
-                    }
-                } else {
-                    Log.e(TAG, "Error en el login: ${loginResponse.code()} - ${loginResponse.message()}")
-                }
-            } catch (e: Exception) {
-                Log.e(TAG, "Excepción durante el login", e)
-            }
 
             Log.i(TAG, "------------------------------------------------------")
 
-            try {
-                val createUserResponse = RetrofitClient.api.createUser()
-
-                if (createUserResponse.isSuccessful) {
-                    val createdUser = createUserResponse.body()
-                    Log.i(TAG, "CREACIÓN DE USUARIO EXITOSA:")
-                    createdUser?.let {
-                        Log.i(TAG, "Usuario creado con ID: ${it.id} y nombre: ${it.name.firstname}")
-                    }
-                } else {
-                    Log.e(TAG, "Error al crear usuario: ${createUserResponse.code()} - ${createUserResponse.message()}")
-                }
-            } catch (e: Exception) {
-                Log.e(TAG, "Excepción al crear usuario", e)
-            }
 
             Log.i(TAG, "------------------------------------------------------")
 
@@ -114,7 +85,7 @@ class MainActivity : ComponentActivity() {
                         Log.i(TAG, "Número de transacciones: ${userAccount.transactions.size}")
 
                         if (userAccount.transactions.isNotEmpty()) {
-                            Log.i(TAG, "Primera transacción: ${userAccount.transactions[1].description}")
+                            Log.i(TAG, "Primera transacción: ${userAccount.transactions[1]}")
                         }
 
                     } else {
@@ -143,6 +114,5 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     PARCIALPR3ORTTheme {
-        AppScaffold()
     }
 }

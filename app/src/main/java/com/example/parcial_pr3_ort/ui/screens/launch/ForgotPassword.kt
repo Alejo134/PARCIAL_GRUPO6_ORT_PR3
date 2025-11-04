@@ -1,4 +1,4 @@
-package com.example.parcial_pr3_ort.ui.screens
+package com.example.parcial_pr3_ort.ui.screens.launch
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
@@ -15,12 +15,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.ui.components.*
+import com.example.parcial_pr3_ort.ui.screens.AppRoutes
 import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
 
 @Composable
-fun ForgotPasswordScreen() {
+fun ForgotPasswordScreen(navController: NavController) {
     var email by rememberSaveable { mutableStateOf("") }
 
     OnboardingScreenLayout(
@@ -72,7 +75,7 @@ fun ForgotPasswordScreen() {
                 backgroundColor = MaterialTheme.colorScheme.primary,
                 textColor = MaterialTheme.colorScheme.onSecondary,
                 modifier = Modifier.height(42.dp),
-                onClick = { /* TODO: Lógica de Next Step */ }
+                onClick = { navController.navigate(AppRoutes.SECURITY_PIN) }
             )
 
             Spacer(modifier = Modifier.height(130.dp))
@@ -82,7 +85,7 @@ fun ForgotPasswordScreen() {
                 backgroundColor = MaterialTheme.colorScheme.secondary,
                 textColor = MaterialTheme.colorScheme.onSecondary,
                 modifier = Modifier.height(42.dp),
-                onClick = { /* TODO: Navegar a Sign Up */ }
+                onClick = { navController.navigate(AppRoutes.CREATE_ACCOUNT) }
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -127,7 +130,7 @@ fun ForgotPasswordScreen() {
                 onClick = { offset ->
                     bottomText.getStringAnnotations("SIGNUP_TAG", offset, offset)
                         .firstOrNull()?.let {
-                            // TODO: Navegar a Sign Up
+                            navController.navigate(AppRoutes.CREATE_ACCOUNT)
                         }
                 }
             )
@@ -141,6 +144,6 @@ fun ForgotPasswordScreen() {
 @Composable
 fun ForgotPasswordScreenPreview() {
     PARCIALPR3ORTTheme {
-        ForgotPasswordScreen()
+        ForgotPasswordScreen(navController = rememberNavController())
     }
 }

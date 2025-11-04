@@ -1,4 +1,4 @@
-package com.example.parcial_pr3_ort.ui.screens
+package com.example.parcial_pr3_ort.ui.screens.launch
 
 import android.app.Activity
 import androidx.compose.foundation.Image
@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,11 +25,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
+import androidx.navigation.NavController
 import com.example.parcial_pr3_ort.R
+import com.example.parcial_pr3_ort.ui.screens.AppRoutes
 import com.example.parcial_pr3_ort.ui.theme.CaribbeanGreen
+import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(modifier: Modifier = Modifier) {
+fun SplashScreen(navController: NavController, modifier: Modifier = Modifier) {
+
+    LaunchedEffect(key1 = true) {
+        delay(2000L)
+
+        navController.navigate(AppRoutes.ONBOARDING) {
+            popUpTo(AppRoutes.LAUNCH) {
+                inclusive = true
+            }
+        }
+    }
 
     val view = LocalView.current
     val splashScreenColor = CaribbeanGreen
@@ -67,10 +81,4 @@ fun SplashScreen(modifier: Modifier = Modifier) {
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun SplashScreenPreview() {
-    SplashScreen()
 }

@@ -1,4 +1,4 @@
-package com.example.parcial_pr3_ort.ui.screens
+package com.example.parcial_pr3_ort.ui.screens.launch
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -32,16 +32,19 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.ui.components.AppPasswordTextField
 import com.example.parcial_pr3_ort.ui.components.AppTextField
 import com.example.parcial_pr3_ort.ui.components.ButtonLog
 import com.example.parcial_pr3_ort.ui.components.OnboardingScreenLayout
+import com.example.parcial_pr3_ort.ui.screens.AppRoutes
 import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
 import com.example.parcial_pr3_ort.ui.viewmodels.CreateAccountViewModel
 
 @Composable
-fun CreateAccountScreen(viewModel: CreateAccountViewModel = viewModel()) {
+fun CreateAccountScreen(navController: NavController, viewModel: CreateAccountViewModel = viewModel()) {
 
     var fullName by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
@@ -57,10 +60,13 @@ fun CreateAccountScreen(viewModel: CreateAccountViewModel = viewModel()) {
     LaunchedEffect(uiState) {
         when (val state = uiState) {
             is CreateAccountUIState.Success -> {
-                Toast.makeText(context, "Cuenta Creada! ID: ${state.user.id}", Toast.LENGTH_LONG)
+                Toast.makeText(context, "¡Cuenta Creada con exito, Bienvenido!", Toast.LENGTH_LONG)
                     .show()
-                // TODO:  navegación a la pantalla de Home o Login
-                viewModel.resetState()
+                navController.navigate(AppRoutes.HOME) {
+                    popUpTo(AppRoutes.SECONDARY_LAUNCH) {
+                        inclusive = false
+                    }
+                }
             }
 
             is CreateAccountUIState.Error -> {
@@ -243,7 +249,7 @@ fun CreateAccountScreen(viewModel: CreateAccountViewModel = viewModel()) {
                     onClick = { offset ->
                         bottomText.getStringAnnotations("LOGIN_TAG", offset, offset)
                             .firstOrNull()?.let {
-                                // TODO: Navegar de vuelta a LoginScreen
+                                navController.navigate(AppRoutes.LOGIN)
                             }
                     }
                 )
@@ -258,6 +264,6 @@ fun CreateAccountScreen(viewModel: CreateAccountViewModel = viewModel()) {
 @Composable
 fun CreateAccountScreenPreview() {
     PARCIALPR3ORTTheme {
-        CreateAccountScreen()
+        CreateAccountScreen(navController = rememberNavController())
     }
 }

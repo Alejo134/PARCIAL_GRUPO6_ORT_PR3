@@ -1,4 +1,4 @@
-package com.example.parcial_pr3_ort.ui.screens
+package com.example.parcial_pr3_ort.ui.screens.launch
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
@@ -15,15 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.ui.components.LoadingAnimation
-import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
-import com.example.parcial_pr3_ort.ui.screens.PasswordChangeViewModel
-import com.example.parcial_pr3_ort.ui.screens.PasswordChangeState
-import com.example.parcial_pr3_ort.ui.screens.PasswordChangeState.*
+import com.example.parcial_pr3_ort.ui.screens.AppRoutes
+import kotlinx.coroutines.delay
 
 /**
  * Pantalla "Inteligente": Obtiene el ViewModel, observa el estado
@@ -31,6 +29,7 @@ import com.example.parcial_pr3_ort.ui.screens.PasswordChangeState.*
  */
 @Composable
 fun PasswordChangedScreen(
+    navController: NavController,
     wasSuccess: Boolean = true,
     viewModel: PasswordChangeViewModel = viewModel(),
     modifier: Modifier = Modifier
@@ -39,6 +38,17 @@ fun PasswordChangedScreen(
 
     LaunchedEffect(Unit) {
         viewModel.startChangeProcess(success = wasSuccess)
+    }
+    LaunchedEffect(state) {
+        if (state is PasswordChangeState.Success) {
+            delay(2500L)
+
+            navController.navigate(AppRoutes.LOGIN) {
+                popUpTo(AppRoutes.AUTH_GRAPH) {
+                    inclusive = true
+                }
+            }
+        }
     }
 
     PasswordChangedContent(
@@ -89,8 +99,8 @@ fun PasswordChangedContent(
         ) { currentState ->
 
             val textResId = when (currentState) {
-                is Success -> R.string.password_changed_success
-                is Error -> R.string.password_changed_error
+                is PasswordChangeState.Success -> R.string.password_changed_success
+                is PasswordChangeState.Error -> R.string.password_changed_error
                 else -> null
             }
 

@@ -1,4 +1,4 @@
-package com.example.parcial_pr3_ort.ui.screens
+package com.example.parcial_pr3_ort.ui.screens.launch
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
@@ -6,7 +6,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -15,12 +14,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.ui.components.*
+import com.example.parcial_pr3_ort.ui.screens.AppRoutes
 import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
 
 @Composable
-fun SecurityPinScreen() {
+fun SecurityPinScreen(navController: NavController) {
 
     var pinValue by rememberSaveable { mutableStateOf("") }
 
@@ -60,7 +62,7 @@ fun SecurityPinScreen() {
                 modifier = Modifier
                     .width(200.dp)
                     .height(50.dp),
-                onClick = { /* TODO: Lógica de Aceptar PIN */ }
+                onClick = { navController.navigate(AppRoutes.NEW_PASSWORD) }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -133,6 +135,6 @@ fun SecurityPinScreen() {
 @Composable
 fun SecurityPinScreenPreview() {
     PARCIALPR3ORTTheme {
-        SecurityPinScreen()
+        SecurityPinScreen(navController = rememberNavController())
     }
 }

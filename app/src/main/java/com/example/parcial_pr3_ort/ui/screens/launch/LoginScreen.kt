@@ -1,4 +1,4 @@
-package com.example.parcial_pr3_ort.ui.screens
+package com.example.parcial_pr3_ort.ui.screens.launch
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -28,17 +28,20 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.ui.components.AppPasswordTextField
 import com.example.parcial_pr3_ort.ui.components.AppTextField
 import com.example.parcial_pr3_ort.ui.components.ButtonLog
 import com.example.parcial_pr3_ort.ui.components.OnboardingScreenLayout
 import com.example.parcial_pr3_ort.ui.components.SocialLoginButton
+import com.example.parcial_pr3_ort.ui.screens.AppRoutes
 import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
 import com.example.parcial_pr3_ort.ui.viewmodels.LoginViewModel
 
 @Composable
-fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
+fun LoginScreen(navController: NavController, viewModel: LoginViewModel = viewModel()) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     val uiState by viewModel.uiState.collectAsState()
@@ -53,8 +56,11 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
                     "Login OK. Token: ${state.response.token}",
                     Toast.LENGTH_LONG
                 ).show()
-                // TODO: Aquí iría la navegación a la pantalla de Home
-                viewModel.resetState()
+                navController.navigate(AppRoutes.MAIN_GRAPH) {
+                    popUpTo(AppRoutes.AUTH_GRAPH) {
+                        inclusive = true
+                    }
+                }
             }
 
             is LoginUIState.Error -> {
@@ -121,7 +127,7 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
                     color = MaterialTheme.colorScheme.onBackground,
                     fontWeight = FontWeight.SemiBold
                 ),
-                onClick = { /* TODO: Navegar a Forgot Password */ }
+                onClick = { navController.navigate(AppRoutes.FORGOT_PASSWORD) }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -130,7 +136,7 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
                 stringId = R.string.sign_up,
                 backgroundColor = MaterialTheme.colorScheme.secondary,
                 textColor = MaterialTheme.colorScheme.onSecondary,
-                onClick = { /* TODO: Navegar a Sign Up */ },
+                onClick = { navController.navigate(AppRoutes.CREATE_ACCOUNT) },
                 enabled = !isLoading
             )
 
@@ -155,7 +161,7 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
                 style = MaterialTheme.typography.bodyMedium.copy(
                     color = MaterialTheme.colorScheme.onBackground
                 ),
-                onClick = { /* TODO: Lógica de Biométricos */ }
+                onClick = {  }
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -174,7 +180,7 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
                 SocialLoginButton(
                     iconResId = R.drawable.ic_facebook,
                     contentDescResId = R.string.facebook_logo_desc,
-                    onClick = { /* TODO: Login Facebook */ }
+                    onClick = {  }
                 )
                 SocialLoginButton(
                     iconResId = R.drawable.ic_google,
@@ -206,7 +212,7 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
                 onClick = { offset ->
                     bottomText.getStringAnnotations("SIGNUP_TAG", offset, offset)
                         .firstOrNull()?.let {
-                            // TODO: Navegar a Sign Up
+                            navController.navigate(AppRoutes.CREATE_ACCOUNT)
                         }
                 }
             )
@@ -218,6 +224,6 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
 @Composable
 fun LoginScreenPreview() {
     PARCIALPR3ORTTheme {
-        LoginScreen()
+        LoginScreen(navController = rememberNavController())
     }
 }

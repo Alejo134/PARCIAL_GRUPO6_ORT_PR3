@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.parcial_pr3_ort.api.RetrofitClient
 import com.example.parcial_pr3_ort.data.dto.LoginRequest
-import com.example.parcial_pr3_ort.ui.screens.LoginUIState
+import com.example.parcial_pr3_ort.ui.screens.launch.LoginUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

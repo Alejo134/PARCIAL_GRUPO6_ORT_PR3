@@ -1,6 +1,6 @@
-package com.example.parcial_pr3_ort.ui.screens
+package com.example.parcial_pr3_ort.ui.screens.launch
 
-import com.example.parcial_pr3_ort.data.dao.UserDetail
+import com.example.parcial_pr3_ort.data.model.UserDetail
 
 sealed interface CreateAccountUIState {
     object Idle : CreateAccountUIState

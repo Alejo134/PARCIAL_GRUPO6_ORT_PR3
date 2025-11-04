@@ -1,4 +1,4 @@
-package com.example.parcial_pr3_ort.ui.screens
+package com.example.parcial_pr3_ort.ui.screens.launch
     /**
      * Define los estados visuales para la pantalla de cambio de contraseña.
      * Refleja las secuencias de animación de 'check' y 'denied'.
