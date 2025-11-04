@@ -9,11 +9,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,11 +27,13 @@ import com.example.parcial_pr3_ort.ui.theme.CaribbeanGreen
 import com.example.parcial_pr3_ort.ui.theme.FenceGreen
 import com.example.parcial_pr3_ort.ui.theme.Honeydew
 import com.example.parcial_pr3_ort.ui.theme.LightGreen
-
+import androidx.navigation.NavController // <<< AÑADE ESTE IMPORT
+import androidx.navigation.NavDestination.Companion.hierarchy // <<< AÑADE ESTE IMPORT
+import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun AppNavigationBar(
-    currentRoute: String,
+    navController: NavController,
     onNavItemClick: (String) -> Unit
 ) {
 
@@ -57,7 +57,7 @@ fun AppNavigationBar(
         ),
         BottomNavItem(
             icon = painterResource(id = R.drawable.category),
-            route = "add"
+            route = AppRoutes.CATEGORIES_GRAPH
         ),
         BottomNavItem(
             icon = painterResource(id = R.drawable.profile),
@@ -68,7 +68,7 @@ fun AppNavigationBar(
     Box(modifier = Modifier.background(Honeydew)){
     Box(
         modifier = Modifier
-            .fillMaxWidth() // Ocupa todo el ancho para poder centrar su contenido
+            .fillMaxWidth()
             .height(100.dp)
             .clip(RoundedCornerShape(topStart = 70.dp, topEnd = 70.dp))
             .background(LightGreen),
@@ -81,9 +81,14 @@ fun AppNavigationBar(
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
+
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentDestination = navBackStackEntry?.destination
+
             bottomNavItems.forEach { navItem ->
                 NavigationBarItem(
-                    selected = currentRoute == navItem.route,
+                    // 4. LA LÓGICA DE SELECCIÓN DEFINITIVA
+                    selected = currentDestination?.hierarchy?.any { it.route == navItem.route } == true,
                     onClick = {
                         if (navItem.route != "add") {
                             onNavItemClick(navItem.route)

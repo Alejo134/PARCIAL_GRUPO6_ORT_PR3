@@ -12,18 +12,22 @@ interface TransactionDao {
 
     // Inserta una nueva transacción.
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTransaction(transaction: EntityTransaction) // REFACTOR 2: El método y el parámetro usan "Transaction"
+    suspend fun insertTransaction(transaction: EntityTransaction)
 
     // Obtiene TODAS las transacciones, ordenadas por fecha (las más nuevas primero).
     // Devuelve un Flow para actualizaciones automáticas en la UI.
-    @Query("SELECT * FROM `transaction` ORDER BY date DESC") // REFACTOR 3: La tabla se llama 'transaction'
-    fun getAllTransactions(): Flow<List<EntityTransaction>> // REFACTOR 4: El método ahora es getAllTransactions
+    @Query("SELECT * FROM `transaction` ORDER BY date DESC")
+    fun getAllTransactions(): Flow<List<EntityTransaction>>
 
     // Obtiene una única transacción por su ID.
-    @Query("SELECT * FROM `transaction` WHERE id = :id") // REFACTOR 3: La tabla se llama 'transaction'
-    suspend fun getTransactionById(id: Int): EntityTransaction? // REFACTOR 5: El método ahora es getTransactionById
+    @Query("SELECT * FROM `transaction` WHERE id = :id")
+    suspend fun getTransactionById(id: Int): EntityTransaction?
 
     // Borra todas las transacciones de la tabla.
     @Query("DELETE FROM `transaction`") // REFACTOR 3: La tabla se llama 'transaction'
-    suspend fun deleteAllTransactions() // REFACTOR 6: El método ahora es deleteAllTransactions
+    suspend fun deleteAllTransactions()
+
+
+    @Query("SELECT * FROM `transaction` WHERE category = :categoryName ORDER BY date DESC")
+    fun getTransactionsByCategory(categoryName: String): Flow<List<EntityTransaction>>
 }

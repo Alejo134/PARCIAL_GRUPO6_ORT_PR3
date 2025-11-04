@@ -12,7 +12,12 @@ object RetrofitClient {
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
-
+    private val authInterceptor = okhttp3.Interceptor { chain ->
+        val request = chain.request().newBuilder()
+            .addHeader("x-api-key", "123456789")
+            .build()
+        chain.proceed(request)
+    }
     private val client = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
         .build()

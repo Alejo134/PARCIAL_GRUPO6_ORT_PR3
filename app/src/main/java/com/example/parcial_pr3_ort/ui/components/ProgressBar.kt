@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.materialIcon
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -33,13 +31,15 @@ import com.example.parcial_pr3_ort.R
 import com.example.parcial_pr3_ort.ui.theme.CaribbeanGreen
 import com.example.parcial_pr3_ort.ui.theme.FenceGreen
 import com.example.parcial_pr3_ort.ui.theme.Honeydew
+import com.example.parcial_pr3_ort.ui.theme.OceanBlue
 import com.example.parcial_pr3_ort.ui.theme.PARCIALPR3ORTTheme
 
 @Composable
-fun CategoryProgressBar(
+fun ProgressBar(
     categoryName: String,
     currentValue: Double,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    colorProgressBar: Color,
 ) {
     Column(
         modifier = modifier,
@@ -60,7 +60,7 @@ fun CategoryProgressBar(
                     .width(261.dp) // El ancho depende del progreso
                     .height(27.dp)
                     .clip(CircleShape)
-                    .background(Honeydew)
+                    .background(colorProgressBar)
                     .align(Alignment.CenterEnd)
             )
             Row(
@@ -120,9 +120,10 @@ fun CategoryProgressBarPreview() {
             Column(
                 modifier = Modifier.padding(16.dp),
             ) {
-                CategoryProgressBar(
+                ProgressBar(
                     categoryName = "30% of your expenses, looks good.",
                     currentValue = 20000.0,
+                    colorProgressBar = OceanBlue
                 )
             }
         }

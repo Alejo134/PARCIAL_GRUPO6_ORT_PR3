@@ -50,7 +50,7 @@ class HomeViewModel(private val repository: UserAccountRepository) : ViewModel()
                 _totalExpense.value = userAccount.expense
                 _transactions.value = userAccount.transactions
             }.onFailure { exception ->
-                // Si hubo un fallo, actualizamos el estado del mensaje de error.
+
                 _errorMessage.value = "Error al cargar los datos: ${exception.message}"
             }
 
