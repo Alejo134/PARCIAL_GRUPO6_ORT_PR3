@@ -55,6 +55,7 @@
     <string name="cancel">Cancel</string>
     <string name="yes_delete_account">Yes, Delete Account</string>
     <string name="yes_delete">Yes Delete</string>
+    <string name="yes_end">Yes, End Sessios</string>
     <string name="password_changed_success">Password Has Been Changed Successfully</string>
     <string name="password_changed_error">An Error Occurred, Please Try Again</string>
     <string name="loading_animation_desc">Animación de carga</string>

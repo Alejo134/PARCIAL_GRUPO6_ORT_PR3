@@ -22,11 +22,11 @@ import com.example.parcial_pr3_ort.ui.components.AppNavigationBar
 import com.example.parcial_pr3_ort.ui.components.MainTopAppBar
 import com.example.parcial_pr3_ort.ui.screens.AccountBalanceScreen
 import com.example.parcial_pr3_ort.ui.screens.AddExpensesScreen
-import com.example.parcial_pr3_ort.ui.screens.AddSavingsScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.AddSavingsScreen
 import com.example.parcial_pr3_ort.ui.screens.AppRoutes
 import com.example.parcial_pr3_ort.ui.screens.CategoriesScreen
-import com.example.parcial_pr3_ort.ui.screens.ChangePinScreen
-import com.example.parcial_pr3_ort.ui.screens.EditProfileScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.ChangePinScreen
+//import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.EditProfileScreen
 import com.example.parcial_pr3_ort.ui.screens.EntertainmentCatScreen
 import com.example.parcial_pr3_ort.ui.screens.FoodCatScreen
 import com.example.parcial_pr3_ort.ui.screens.GiftsCatScreen
@@ -34,16 +34,16 @@ import com.example.parcial_pr3_ort.ui.screens.GroceriesCatScreen
 import com.example.parcial_pr3_ort.ui.screens.HomeScreen
 import com.example.parcial_pr3_ort.ui.screens.MedicineCatScreen
 import com.example.parcial_pr3_ort.ui.screens.NotificationsScreen
-import com.example.parcial_pr3_ort.ui.screens.ProfileScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.ProfileScreen
 import com.example.parcial_pr3_ort.ui.screens.RentCatScreen
-import com.example.parcial_pr3_ort.ui.screens.SecurityScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.SecurityScreen
 import com.example.parcial_pr3_ort.ui.screens.TransactionScreen
 import com.example.parcial_pr3_ort.ui.screens.TransportCatScreen
-import com.example.parcial_pr3_ort.ui.screens.FingerprintScreen
-import com.example.parcial_pr3_ort.ui.screens.AddFingerprintScreen
-import com.example.parcial_pr3_ort.ui.screens.JhonFingerprintScreen
-import com.example.parcial_pr3_ort.ui.screens.SuccessScreen
-import com.example.parcial_pr3_ort.ui.screens.TermsAndConditionsScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.FingerprintScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.AddFingerprintScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.JhonFingerprintScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.SuccessScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.TermsAndConditionsScreen
 import com.example.parcial_pr3_ort.ui.screens.categories_screens.SavingsCatScreen
 import com.example.parcial_pr3_ort.ui.screens.profile_screens.DeleteAccountScreen
 import com.example.parcial_pr3_ort.ui.screens.profile_screens.HelpFaqScreen
@@ -51,6 +51,7 @@ import com.example.parcial_pr3_ort.ui.screens.profile_screens.NotificationSettin
 import com.example.parcial_pr3_ort.ui.screens.profile_screens.OnlineSupportScreen
 import com.example.parcial_pr3_ort.ui.screens.profile_screens.PasswordSettingsScreen
 import com.example.parcial_pr3_ort.ui.screens.profile_screens.SettingsScreens
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.EditProfileScreen
 import com.example.parcial_pr3_ort.ui.screens.saving_screens.CarScreen
 import com.example.parcial_pr3_ort.ui.screens.saving_screens.NewHouseScreen
 import com.example.parcial_pr3_ort.ui.screens.saving_screens.TravelScreen
@@ -149,28 +150,14 @@ fun MainScaffold(rootNavController: NavHostController) {
             }
 
             composable(AppRoutes.PROFILE) {
-                ProfileScreen(
-                    onEditProfileClick = { mainNavController.navigate(AppRoutes.EDIT_PROFILE) },
-                    onSecurityClick = { mainNavController.navigate(AppRoutes.SECURITY) },
-                    onSettingClick = { /* TODO: Navigate to settings */ },
-                    onHelpClick = { /* TODO: Navigate to help */ },
-                    onLogoutClick = {
-                        // Navigate back to auth graph
-                        rootNavController.navigate(AppRoutes.AUTH_GRAPH) {
-                            popUpTo(AppRoutes.MAIN_GRAPH) { inclusive = true }
-                        }
-                    }
-                )
+                ProfileScreen(mainNavController)
             }
 
             composable(AppRoutes.EDIT_PROFILE) {
-                EditProfileScreen(
-                    onUpdateProfile = {
-                        // Navigate back to profile
-                        mainNavController.popBackStack()
-                    }
-                )
+                EditProfileScreen(mainNavController)
             }
+
+
 
             composable(AppRoutes.SECURITY) {
                 SecurityScreen(

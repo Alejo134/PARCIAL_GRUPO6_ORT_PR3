@@ -1,4 +1,4 @@
-package com.example.parcial_pr3_ort.ui.screens
+package com.example.parcial_pr3_ort.ui.screens.profile_screens_2
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

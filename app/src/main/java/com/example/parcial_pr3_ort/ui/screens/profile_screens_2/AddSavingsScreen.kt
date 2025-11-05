@@ -1,4 +1,4 @@
-package com.example.parcial_pr3_ort.ui.screens
+package com.example.parcial_pr3_ort.ui.screens.profile_screens_2
 
 import android.icu.text.SimpleDateFormat
 import androidx.compose.foundation.background
@@ -36,6 +36,7 @@ import androidx.navigation.NavController
 import com.example.parcial_pr3_ort.data.AppDataBase
 import com.example.parcial_pr3_ort.data.TransactionRepository
 import com.example.parcial_pr3_ort.ui.components.ButtonAddExpenses
+import com.example.parcial_pr3_ort.ui.screens.CategoryDropdown
 import com.example.parcial_pr3_ort.ui.theme.Cyprus
 import com.example.parcial_pr3_ort.ui.theme.Honeydew
 import com.example.parcial_pr3_ort.ui.theme.LightGreen
