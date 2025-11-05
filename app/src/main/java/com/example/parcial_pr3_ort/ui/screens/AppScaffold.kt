@@ -82,6 +82,33 @@ object AppRoutes {
     const val PIN_CHANGED_SUCCESS = "pin_changed_success"
     const val FINGERPRINT_CHANGED_SUCCESS = "fingerprint_changed_success"
     const val FINGERPRINT_DELETED_SUCCESS = "fingerprint_deleted_success"
+    // --- PANTALLAS DEL PROFILE ---
+
+    const val PROFILE = "profile"
+
+    const val EDIT_PROFILE = "edit_profile"
+
+    const val SECURITY = "security"
+
+    const val CHANGUE_PIN = "change_pin"
+
+    const val FINGERPRINT = "fingerprint"
+
+    const val TERMS_AND_CONDITIONS = "terms_and_conditions"
+
+    const val SETTINGS_SCREEN = "settings_screen"
+
+    const val NOTIFICATION_SETTINGS = "notification_settings"
+
+    const val PASSWORD_SETTINGS = "password_settings"
+
+    const val DELETE_ACCOUNT = "delete_account"
+
+    const val HELP_FAQ = "help_faq"
+
+    const val ONLINE_SUPPORT = "online_support"
+
+
 }
 
 fun NavGraphBuilder.authNavGraph(navController: NavController) {

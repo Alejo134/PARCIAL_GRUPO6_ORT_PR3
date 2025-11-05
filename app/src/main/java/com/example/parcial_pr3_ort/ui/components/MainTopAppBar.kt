@@ -165,7 +165,6 @@ private fun getTitleForRoute(route: String): String {
         AppRoutes.TRAVEL_CATEGORY -> "Travel"
         AppRoutes.ACCOUNT_BALANCE -> "Account Balance"
         AppRoutes.PROFILE -> "Profile"
-        AppRoutes.SETTINGS -> "Settings"
         AppRoutes.EDIT_PROFILE -> "Edit My Profile"
         AppRoutes.SECURITY -> "Security"
         AppRoutes.CHANGE_PIN -> "Change Pin"
@@ -178,6 +177,15 @@ private fun getTitleForRoute(route: String): String {
         AppRoutes.NEW_HOUSE_CATEGORY -> "New House"
         AppRoutes.CAR_CATEGORY -> "Car"
         AppRoutes.WEDDING_CATEGORY -> "Wedding"
+        AppRoutes. CHANGUE_PIN -> "Change PIN"
+        AppRoutes. FINGERPRINT -> "Fingerprint"
+        AppRoutes.TERMS_AND_CONDITIONS -> "Terms and Conditions"
+        AppRoutes.SETTINGS_SCREEN -> "Settings"
+        AppRoutes.NOTIFICATION_SETTINGS -> "Notification Settings"
+        AppRoutes.PASSWORD_SETTINGS -> "Password Settings"
+        AppRoutes.DELETE_ACCOUNT -> "Delete Account"
+        AppRoutes.HELP_FAQ -> "Help & FAQ"
+        AppRoutes.ONLINE_SUPPORT -> "Online Support"
 
         else -> "My Account"
     }

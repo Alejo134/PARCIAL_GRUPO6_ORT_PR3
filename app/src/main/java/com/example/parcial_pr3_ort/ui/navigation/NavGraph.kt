@@ -45,6 +45,12 @@ import com.example.parcial_pr3_ort.ui.screens.JhonFingerprintScreen
 import com.example.parcial_pr3_ort.ui.screens.SuccessScreen
 import com.example.parcial_pr3_ort.ui.screens.TermsAndConditionsScreen
 import com.example.parcial_pr3_ort.ui.screens.categories_screens.SavingsCatScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens.DeleteAccountScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens.HelpFaqScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens.NotificationSettingsScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens.OnlineSupportScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens.PasswordSettingsScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens.SettingsScreens
 import com.example.parcial_pr3_ort.ui.screens.saving_screens.CarScreen
 import com.example.parcial_pr3_ort.ui.screens.saving_screens.NewHouseScreen
 import com.example.parcial_pr3_ort.ui.screens.saving_screens.TravelScreen
@@ -251,6 +257,12 @@ fun MainScaffold(rootNavController: NavHostController) {
                     }
                 )
             }
+            composable(AppRoutes.SETTINGS_SCREEN) { SettingsScreens(mainNavController) }
+            composable(AppRoutes.NOTIFICATION_SETTINGS) { NotificationSettingsScreen(mainNavController) }
+            composable(AppRoutes.PASSWORD_SETTINGS) { PasswordSettingsScreen(rootNavController = rootNavController)}
+            composable(AppRoutes.DELETE_ACCOUNT) { DeleteAccountScreen(rootNavController = rootNavController) }
+            composable(AppRoutes.HELP_FAQ) { HelpFaqScreen(mainNavController) }
+            composable(AppRoutes.ONLINE_SUPPORT) { OnlineSupportScreen(mainNavController) }
 
             navigation(
                 startDestination = AppRoutes.CATEGORIES,
@@ -280,6 +292,15 @@ fun MainScaffold(rootNavController: NavHostController) {
                 composable(AppRoutes.CAR_CATEGORY) { CarScreen(mainNavController) }
                 composable(AppRoutes.WEDDING_CATEGORY) { WeddingScreen(mainNavController) }
                 composable(AppRoutes.ADD_SAVINGS) { AddSavingsScreen(mainNavController) }
+
+
+
+
+
+
+
+
+
 
             }
         }
