@@ -5,10 +5,12 @@ Algo bien moderno que se ajusta a lo visto en clase.
 También tuvimos stateful con los que gestionamos estados internos y almacenamos valores que podían cambiar.
 Por ejemplo: LoginScreen, PasswordTextField(gestiona su estado de visibilidad), etc.
 La eleccion se define en dos reglas generales y son:
--Si es un componente que se va a reutilizar en muchos lugares es stateless
+
+-Si es un componente que se va a reutilizar en muchos lugares es stateless.
+
 -Si es una pantalla que coordina varios componentes es stateful para gestionar el estado de logica de la misma.
 
-3) Sin dudas una de las mejoras que le hariamos es implementar firebase.
+3)Sin dudas una de las mejoras que le hariamos es implementar firebase.
 
 4)El manejo de errores actual en el código se reparte en las tres capas (UI, ViewModel, Repositorio)
 La estrategia más adecuada sería Centralizar el Mapeo de Errores en la Capa de Repositorio usando Clases Selladas (Sealed Classes)
