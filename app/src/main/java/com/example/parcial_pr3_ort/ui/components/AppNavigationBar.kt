@@ -59,7 +59,7 @@ fun AppNavigationBar(
         ),
         BottomNavItem(
             icon = painterResource(id = R.drawable.profile),
-            route = AppRoutes.SETTINGS
+            route = AppRoutes.HELP_FAQ
         )
     )
 
