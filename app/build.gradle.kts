@@ -47,6 +47,8 @@ android {
 dependencies {
 
     implementation(libs.material3)
+    implementation(libs.androidx.runtime)
+    implementation(libs.androidx.foundation)
     // --- DEPENDENCIAS LIMPIAS Y ORDENADAS ---
 
     // Room Database

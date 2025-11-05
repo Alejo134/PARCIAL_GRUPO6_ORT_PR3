@@ -59,50 +59,50 @@ fun AppNavigationBar(
         ),
         BottomNavItem(
             icon = painterResource(id = R.drawable.profile),
-            route = AppRoutes.SETTINGS
+            route = AppRoutes.PROFILE
         )
     )
 
-    Box(modifier = Modifier.background(Honeydew)){
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp)
-            .clip(RoundedCornerShape(topStart = 70.dp, topEnd = 70.dp))
-            .background(LightGreen),
-        contentAlignment = Alignment.Center
-    ) {
-        Row(
+    Box(modifier = Modifier.background(Honeydew)) {
+        Box(
             modifier = Modifier
-                .width(300.dp)
-                .height(100.dp),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
+                .fillMaxWidth()
+                .height(100.dp)
+                .clip(RoundedCornerShape(topStart = 70.dp, topEnd = 70.dp))
+                .background(LightGreen),
+            contentAlignment = Alignment.Center
         ) {
+            Row(
+                modifier = Modifier
+                    .width(300.dp)
+                    .height(100.dp),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
 
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentDestination = navBackStackEntry?.destination
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
 
-            bottomNavItems.forEach { navItem ->
-                NavigationBarItem(
-                    // 4. LA LÓGICA DE SELECCIÓN DEFINITIVA
-                    selected = currentDestination?.hierarchy?.any { it.route == navItem.route } == true,
-                    onClick = {
-                        if (navItem.route != "add") {
-                            onNavItemClick(navItem.route)
-                        }
-                    },
-                    icon = {
-                        Icon(painter = navItem.icon, contentDescription = "")
-                    },
-                    colors = NavigationBarItemDefaults.colors(
-                        unselectedIconColor = FenceGreen,
-                        selectedIconColor = FenceGreen,
-                        indicatorColor = CaribbeanGreen
+                bottomNavItems.forEach { navItem ->
+                    NavigationBarItem(
+                        // 4. LA LÓGICA DE SELECCIÓN DEFINITIVA
+                        selected = currentDestination?.hierarchy?.any { it.route == navItem.route } == true,
+                        onClick = {
+                            if (navItem.route != "add") {
+                                onNavItemClick(navItem.route)
+                            }
+                        },
+                        icon = {
+                            Icon(painter = navItem.icon, contentDescription = "")
+                        },
+                        colors = NavigationBarItemDefaults.colors(
+                            unselectedIconColor = FenceGreen,
+                            selectedIconColor = FenceGreen,
+                            indicatorColor = CaribbeanGreen
+                        )
                     )
-                )
+                }
             }
         }
     }
-}
 }
