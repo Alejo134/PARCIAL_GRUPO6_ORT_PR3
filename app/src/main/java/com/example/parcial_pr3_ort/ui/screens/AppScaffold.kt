@@ -1,12 +1,10 @@
 package com.example.parcial_pr3_ort.ui.screens
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.parcial_pr3_ort.ui.navigation.mainNavGraph
@@ -41,7 +39,8 @@ object AppRoutes {
 
     const val HOME = "home"
     const val NOTIFICATIONS = "notifications"
-    const val SETTINGS = "settings"
+    const val PROFILE = "profile"
+    const val CHANGE_PIN = "change_pin"
     const val CATEGORIES = "categories"
     const val ACCOUNT_BALANCE = "account_balance"
 
@@ -65,6 +64,37 @@ object AppRoutes {
     const val WEDDING_CATEGORY = "wedding_category_screen"
     const val ADD_EXPENSES = "add_expenses_screen"
     const val ADD_SAVINGS = "add_savings_screen"
+
+    const val ADD_FINGERPRINT = "add_fingerprint"
+    const val JHON_FINGERPRINT = "jhon_fingerprint"
+    const val PIN_CHANGED_SUCCESS = "pin_changed_success"
+    const val FINGERPRINT_CHANGED_SUCCESS = "fingerprint_changed_success"
+    const val FINGERPRINT_DELETED_SUCCESS = "fingerprint_deleted_success"
+    // --- PANTALLAS DEL PROFILE ---
+
+
+    const val EDIT_PROFILE = "edit_profile"
+
+    const val SECURITY = "security"
+
+    const val CHANGUE_PIN = "change_pin"
+
+    const val FINGERPRINT = "fingerprint"
+
+    const val TERMS_AND_CONDITIONS = "terms_and_conditions"
+
+    const val SETTINGS_SCREEN = "settings_screen"
+
+    const val NOTIFICATION_SETTINGS = "notification_settings"
+
+    const val PASSWORD_SETTINGS = "password_settings"
+
+    const val DELETE_ACCOUNT = "delete_account"
+
+    const val HELP_FAQ = "help_faq"
+
+    const val ONLINE_SUPPORT = "online_support"
+
 
 }
 
@@ -103,30 +133,23 @@ fun NavGraphBuilder.authNavGraph(navController: NavController) {
     }
 }
 
-
-
 @Composable
 fun RootNavigationGraph() {
     val navController = rememberNavController()
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
 
 
-    val isUserLoggedIn = false // <-- CAMBIA A 'true' PARA PROBAR EL FLUJO PRINCIPAL
-        val startDestination = if (isUserLoggedIn) AppRoutes.MAIN_GRAPH else AppRoutes.AUTH_GRAPH
+    val isUserLoggedIn = false // Set to 'true' to test main flow, 'false' for auth flow
+    val startDestination = if (isUserLoggedIn) AppRoutes.MAIN_GRAPH else AppRoutes.AUTH_GRAPH
 
 
-        NavHost(
-            navController = navController,
-            startDestination = startDestination
-        ) {
-            // Grafo para el flujo de autenticación (no usa el innerPadding del Scaffold)
-            authNavGraph(navController = navController)
+    NavHost(
+        navController = navController,
+        startDestination = startDestination
+    ) {
+        // Grafo para el flujo de autenticación (no usa el innerPadding del Scaffold)
+        authNavGraph(navController = navController)
 
-            // Grafo para el flujo principal (SÍ usa el innerPadding)
-            mainNavGraph(rootNavController = navController)
-        }
+        // Grafo para el flujo principal (SÍ usa el innerPadding)
+        mainNavGraph(rootNavController = navController)
     }
-
-
-
+}

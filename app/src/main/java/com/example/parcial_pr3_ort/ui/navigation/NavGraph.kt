@@ -22,9 +22,11 @@ import com.example.parcial_pr3_ort.ui.components.AppNavigationBar
 import com.example.parcial_pr3_ort.ui.components.MainTopAppBar
 import com.example.parcial_pr3_ort.ui.screens.AccountBalanceScreen
 import com.example.parcial_pr3_ort.ui.screens.AddExpensesScreen
-import com.example.parcial_pr3_ort.ui.screens.AddSavingsScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.AddSavingsScreen
 import com.example.parcial_pr3_ort.ui.screens.AppRoutes
 import com.example.parcial_pr3_ort.ui.screens.CategoriesScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.ChangePinScreen
+//import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.EditProfileScreen
 import com.example.parcial_pr3_ort.ui.screens.EntertainmentCatScreen
 import com.example.parcial_pr3_ort.ui.screens.FoodCatScreen
 import com.example.parcial_pr3_ort.ui.screens.GiftsCatScreen
@@ -32,10 +34,24 @@ import com.example.parcial_pr3_ort.ui.screens.GroceriesCatScreen
 import com.example.parcial_pr3_ort.ui.screens.HomeScreen
 import com.example.parcial_pr3_ort.ui.screens.MedicineCatScreen
 import com.example.parcial_pr3_ort.ui.screens.NotificationsScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.ProfileScreen
 import com.example.parcial_pr3_ort.ui.screens.RentCatScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.SecurityScreen
 import com.example.parcial_pr3_ort.ui.screens.TransactionScreen
 import com.example.parcial_pr3_ort.ui.screens.TransportCatScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.FingerprintScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.AddFingerprintScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.JhonFingerprintScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.SuccessScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.TermsAndConditionsScreen
 import com.example.parcial_pr3_ort.ui.screens.categories_screens.SavingsCatScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens.DeleteAccountScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens.HelpFaqScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens.NotificationSettingsScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens.OnlineSupportScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens.PasswordSettingsScreen
+import com.example.parcial_pr3_ort.ui.screens.profile_screens.SettingsScreens
+import com.example.parcial_pr3_ort.ui.screens.profile_screens_2.EditProfileScreen
 import com.example.parcial_pr3_ort.ui.screens.saving_screens.CarScreen
 import com.example.parcial_pr3_ort.ui.screens.saving_screens.NewHouseScreen
 import com.example.parcial_pr3_ort.ui.screens.saving_screens.TravelScreen
@@ -133,6 +149,107 @@ fun MainScaffold(rootNavController: NavHostController) {
                 TransactionScreen()
             }
 
+            composable(AppRoutes.PROFILE) {
+                ProfileScreen(mainNavController)
+            }
+
+            composable(AppRoutes.EDIT_PROFILE) {
+                EditProfileScreen(mainNavController)
+            }
+
+
+
+            composable(AppRoutes.SECURITY) {
+                SecurityScreen(
+                    onChangePinClick = { mainNavController.navigate(AppRoutes.CHANGE_PIN) },
+                    onFingerprintClick = { mainNavController.navigate(AppRoutes.FINGERPRINT) },
+                    onTermsClick = { mainNavController.navigate(AppRoutes.TERMS_AND_CONDITIONS) }
+                )
+            }
+
+            composable(AppRoutes.CHANGE_PIN) {
+                ChangePinScreen(
+                    onChangePinClick = {
+                        mainNavController.navigate(AppRoutes.PIN_CHANGED_SUCCESS) {
+                            popUpTo(AppRoutes.SECURITY) { inclusive = false }
+                        }
+                    }
+                )
+            }
+
+            composable(AppRoutes.FINGERPRINT) {
+                FingerprintScreen(
+                    onJohnFingerprintClick = { mainNavController.navigate(AppRoutes.JHON_FINGERPRINT) },
+                    onAddFingerprintClick = { mainNavController.navigate(AppRoutes.ADD_FINGERPRINT) }
+                )
+            }
+
+            composable(AppRoutes.ADD_FINGERPRINT) {
+                AddFingerprintScreen(
+                    onUseTouchIdClick = {
+                        mainNavController.navigate(AppRoutes.FINGERPRINT_CHANGED_SUCCESS) {
+                            popUpTo(AppRoutes.FINGERPRINT) { inclusive = false }
+                        }
+                    }
+                )
+            }
+
+            composable(AppRoutes.JHON_FINGERPRINT) {
+                JhonFingerprintScreen(
+                    onDeleteClick = {
+                        mainNavController.navigate(AppRoutes.FINGERPRINT_DELETED_SUCCESS) {
+                            popUpTo(AppRoutes.FINGERPRINT) { inclusive = false }
+                        }
+                    }
+                )
+            }
+
+            composable(AppRoutes.TERMS_AND_CONDITIONS) {
+                TermsAndConditionsScreen(
+                    onAcceptClick = {
+                        mainNavController.popBackStack()
+                    }
+                )
+            }
+
+            composable(AppRoutes.PIN_CHANGED_SUCCESS) {
+                SuccessScreen(
+                    message = "Pin Has Been\nChanged Successfully",
+                    onNavigateBack = {
+                        mainNavController.navigate(AppRoutes.SECURITY) {
+                            popUpTo(AppRoutes.SECURITY) { inclusive = true }
+                        }
+                    }
+                )
+            }
+
+            composable(AppRoutes.FINGERPRINT_CHANGED_SUCCESS) {
+                SuccessScreen(
+                    message = "Fingerprint Has Been\nChanged Successfully",
+                    onNavigateBack = {
+                        mainNavController.navigate(AppRoutes.FINGERPRINT) {
+                            popUpTo(AppRoutes.FINGERPRINT) { inclusive = true }
+                        }
+                    }
+                )
+            }
+
+            composable(AppRoutes.FINGERPRINT_DELETED_SUCCESS) {
+                SuccessScreen(
+                    message = "The Fingerprint Has\nBeen Successfully\nDeleted.",
+                    onNavigateBack = {
+                        mainNavController.navigate(AppRoutes.FINGERPRINT) {
+                            popUpTo(AppRoutes.FINGERPRINT) { inclusive = true }
+                        }
+                    }
+                )
+            }
+            composable(AppRoutes.SETTINGS_SCREEN) { SettingsScreens(mainNavController) }
+            composable(AppRoutes.NOTIFICATION_SETTINGS) { NotificationSettingsScreen(mainNavController) }
+            composable(AppRoutes.PASSWORD_SETTINGS) { PasswordSettingsScreen(rootNavController = rootNavController)}
+            composable(AppRoutes.DELETE_ACCOUNT) { DeleteAccountScreen(rootNavController = rootNavController) }
+            composable(AppRoutes.HELP_FAQ) { HelpFaqScreen(mainNavController) }
+            composable(AppRoutes.ONLINE_SUPPORT) { OnlineSupportScreen(mainNavController) }
 
             navigation(
                 startDestination = AppRoutes.CATEGORIES,
@@ -162,6 +279,15 @@ fun MainScaffold(rootNavController: NavHostController) {
                 composable(AppRoutes.CAR_CATEGORY) { CarScreen(mainNavController) }
                 composable(AppRoutes.WEDDING_CATEGORY) { WeddingScreen(mainNavController) }
                 composable(AppRoutes.ADD_SAVINGS) { AddSavingsScreen(mainNavController) }
+
+
+
+
+
+
+
+
+
 
             }
         }
