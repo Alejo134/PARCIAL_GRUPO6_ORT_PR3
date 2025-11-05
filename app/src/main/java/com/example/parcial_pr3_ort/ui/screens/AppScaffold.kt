@@ -1,84 +1,143 @@
 package com.example.parcial_pr3_ort.ui.screens
 
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.example.parcial_pr3_ort.ui.components.AppNavigationBar
-import com.example.parcial_pr3_ort.ui.components.MainTopAppBar
-import com.example.parcial_pr3_ort.ui.theme.CaribbeanGreen
+import com.example.parcial_pr3_ort.ui.navigation.mainNavGraph
+import com.example.parcial_pr3_ort.ui.screens.launch.CreateAccountScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.ForgotPasswordScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.LoginScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.NewPasswordScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.OnboardingScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.PasswordChangedScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.PreWelcomeScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.SecurityPinScreen
+import com.example.parcial_pr3_ort.ui.screens.launch.SplashScreen
+import com.example.parcial_pr3_ort.ui.screens.FingerprintScreen
+import com.example.parcial_pr3_ort.ui.screens.AddFingerprintScreen
+import com.example.parcial_pr3_ort.ui.screens.JhonFingerprintScreen
+import com.example.parcial_pr3_ort.ui.screens.TermsAndConditionsScreen
+import com.example.parcial_pr3_ort.ui.screens.SuccessScreen
 
-// ... (El objeto AppRoutes se mantiene igual)
 object AppRoutes {
+
+
+    const val AUTH_GRAPH = "auth_graph"
+    const val MAIN_GRAPH = "main_graph"
+
+    // --- PANTALLAS DEL GRAFO DE AUTENTICACIÓN ---
+    const val LAUNCH = "launch"
+    const val SECONDARY_LAUNCH = "secondary_launch"
+    const val ONBOARDING = "onboarding"
+    const val LOGIN = "login"
+    const val FORGOT_PASSWORD = "forgot_password"
+    const val CREATE_ACCOUNT = "create_account"
+    const val SECURITY_PIN = "security_pin"
+    const val NEW_PASSWORD = "new_password"
+    const val PASSWORD_CHANGED = "password_changed"
+
+    // --- PANTALLAS DEL GRAFO DEL MAIN ---
+
     const val HOME = "home"
     const val NOTIFICATIONS = "notifications"
+    const val PROFILE = "profile"
     const val SETTINGS = "settings"
+    const val EDIT_PROFILE = "edit_profile"
+    const val SECURITY = "security"
+    const val CHANGE_PIN = "change_pin"
+    const val CATEGORIES = "categories"
+    const val ACCOUNT_BALANCE = "account_balance"
+
+    const val TRANSACTION_SCREEN = "transaction_screen"
+    const val CATEGORIES_GRAPH = "categories_graph"
+    const val GIFTS_CATEGORY = "gifts_category_screen"
+    const val RENT_CATEGORY = "rent_category_screen"
+    const val FOOD_CATEGORY = "food_category_screen"
+    const val TRANSPORT_CATEGORY = "transport_category_screen"
+    const val MEDICINE_CATEGORY = "medicine_category_screen"
+    const val GROCERIES_CATEGORY = "groceries_category_screen"
+    const val SAVINGS_CATEGORY = "savings_category_screen"
+    const val ENTERTAINMENT_CATEGORY = "entertainment_category_screen"
+
+    const val TRAVEL_CATEGORY = "travel_category_screen"
+
+    const val NEW_HOUSE_CATEGORY = "new_house_category_screen"
+
+    const val CAR_CATEGORY = "car_category_screen"
+
+    const val WEDDING_CATEGORY = "wedding_category_screen"
+    const val ADD_EXPENSES = "add_expenses_screen"
+    const val ADD_SAVINGS = "add_savings_screen"
+
+    const val FINGERPRINT = "fingerprint"
+    const val ADD_FINGERPRINT = "add_fingerprint"
+    const val JHON_FINGERPRINT = "jhon_fingerprint"
+    const val TERMS_AND_CONDITIONS = "terms_and_conditions"
+    const val PIN_CHANGED_SUCCESS = "pin_changed_success"
+    const val FINGERPRINT_CHANGED_SUCCESS = "fingerprint_changed_success"
+    const val FINGERPRINT_DELETED_SUCCESS = "fingerprint_deleted_success"
+}
+
+fun NavGraphBuilder.authNavGraph(navController: NavController) {
+    navigation(
+        startDestination = AppRoutes.LAUNCH, // La primera pantalla del flujo
+        route = AppRoutes.AUTH_GRAPH
+    ) {
+        composable(AppRoutes.LAUNCH) {
+            SplashScreen(navController = navController)
+        }
+        composable(AppRoutes.SECONDARY_LAUNCH) {
+            PreWelcomeScreen(navController = navController)
+        }
+        composable(AppRoutes.ONBOARDING) {
+            OnboardingScreen(navController = navController)
+        }
+        composable(AppRoutes.LOGIN) {
+            LoginScreen(navController = navController)
+        }
+        composable(AppRoutes.CREATE_ACCOUNT) {
+            CreateAccountScreen(navController = navController)
+        }
+        composable(AppRoutes.FORGOT_PASSWORD) {
+            ForgotPasswordScreen(navController = navController)
+        }
+        composable(AppRoutes.SECURITY_PIN) {
+            SecurityPinScreen(navController = navController)
+        }
+        composable(AppRoutes.NEW_PASSWORD) {
+            NewPasswordScreen(navController = navController)
+        }
+        composable(AppRoutes.PASSWORD_CHANGED) {
+            PasswordChangedScreen(navController = navController)
+        }
+    }
 }
 
 @Composable
-fun AppScaffold() {
+fun RootNavigationGraph() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route ?: AppRoutes.HOME
-    val canNavigateBack = navController.previousBackStackEntry != null
+    val currentRoute = navBackStackEntry?.destination?.route
 
-    Scaffold(
-        topBar = {
-            // 2. Pasamos los nuevos parámetros a la TopAppBar
-            MainTopAppBar(
-                currentRoute = currentRoute,
-                canNavigateBack = canNavigateBack,
-                onNavigateBack = { navController.navigateUp() },
-                onNotificationClick = { if (currentRoute != AppRoutes.NOTIFICATIONS) {
-                    navController.navigate(AppRoutes.NOTIFICATIONS)
-                } }
-            )
-        },
-        bottomBar = {
-            AppNavigationBar(
-                currentRoute = currentRoute,
-                onNavItemClick = { route ->
-                    if (currentRoute != route) {
-                        navController.navigate(route) {
-                            popUpTo(navController.graph.startDestinationId)
-                            launchSingleTop = true
-                        }
-                    }
-                }
-            )
-        },
-        containerColor = CaribbeanGreen
-    ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = AppRoutes.HOME,
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            composable(AppRoutes.HOME) {
-                HomeScreen()
-            }
-            composable(
-                route = AppRoutes.NOTIFICATIONS,
-                // Animación de ENTRADA: desliza desde abajo hacia arriba
-                enterTransition = {
-                    slideInVertically(initialOffsetY = { it })
-                },
-                // Animación de SALIDA: desliza hacia abajo para desaparecer
-                exitTransition = {
-                    slideOutVertically(targetOffsetY = { it })
-                }
-            ) {
-                NotificationsScreen()
-            }
-            // Aquí puedes añadir las otras pantallas para probar la navegación
-            // composable(AppRoutes.GOALS) { GoalsScreen() }
-        }
+
+    val isUserLoggedIn = false // Set to 'true' to test main flow, 'false' for auth flow
+    val startDestination = if (isUserLoggedIn) AppRoutes.MAIN_GRAPH else AppRoutes.AUTH_GRAPH
+
+
+    NavHost(
+        navController = navController,
+        startDestination = startDestination
+    ) {
+        // Grafo para el flujo de autenticación (no usa el innerPadding del Scaffold)
+        authNavGraph(navController = navController)
+
+        // Grafo para el flujo principal (SÍ usa el innerPadding)
+        mainNavGraph(rootNavController = navController)
     }
 }

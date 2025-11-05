@@ -8,10 +8,9 @@ data class EntityTransaction(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0, // Clave primaria autoincremental
 
+    val title: String,
     val category: String,
-    val description: String,
-    val amount: Double,
     val date: Long, // Es mejor guardar fechas como Long (timestamp)
-    val expenseType: String, // "Monthly", "Rent", etc. para el expenseTitle
-    val iconResName: String // Guardamos el NOMBRE del drawable, no el ID
+    val amount: Double,
+    val message: String
 )
