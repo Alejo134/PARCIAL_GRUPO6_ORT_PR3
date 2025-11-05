@@ -47,6 +47,8 @@ android {
 dependencies {
 
     implementation(libs.material3)
+    implementation(libs.androidx.runtime)
+    implementation(libs.androidx.foundation)
     implementation(libs.ui)
     // --- DEPENDENCIAS LIMPIAS Y ORDENADAS ---
 

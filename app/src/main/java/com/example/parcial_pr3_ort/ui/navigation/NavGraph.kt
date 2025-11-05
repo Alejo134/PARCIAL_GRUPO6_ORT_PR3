@@ -25,6 +25,8 @@ import com.example.parcial_pr3_ort.ui.screens.AddExpensesScreen
 import com.example.parcial_pr3_ort.ui.screens.AddSavingsScreen
 import com.example.parcial_pr3_ort.ui.screens.AppRoutes
 import com.example.parcial_pr3_ort.ui.screens.CategoriesScreen
+import com.example.parcial_pr3_ort.ui.screens.ChangePinScreen
+import com.example.parcial_pr3_ort.ui.screens.EditProfileScreen
 import com.example.parcial_pr3_ort.ui.screens.EntertainmentCatScreen
 import com.example.parcial_pr3_ort.ui.screens.FoodCatScreen
 import com.example.parcial_pr3_ort.ui.screens.GiftsCatScreen
@@ -32,9 +34,16 @@ import com.example.parcial_pr3_ort.ui.screens.GroceriesCatScreen
 import com.example.parcial_pr3_ort.ui.screens.HomeScreen
 import com.example.parcial_pr3_ort.ui.screens.MedicineCatScreen
 import com.example.parcial_pr3_ort.ui.screens.NotificationsScreen
+import com.example.parcial_pr3_ort.ui.screens.ProfileScreen
 import com.example.parcial_pr3_ort.ui.screens.RentCatScreen
+import com.example.parcial_pr3_ort.ui.screens.SecurityScreen
 import com.example.parcial_pr3_ort.ui.screens.TransactionScreen
 import com.example.parcial_pr3_ort.ui.screens.TransportCatScreen
+import com.example.parcial_pr3_ort.ui.screens.FingerprintScreen
+import com.example.parcial_pr3_ort.ui.screens.AddFingerprintScreen
+import com.example.parcial_pr3_ort.ui.screens.JhonFingerprintScreen
+import com.example.parcial_pr3_ort.ui.screens.SuccessScreen
+import com.example.parcial_pr3_ort.ui.screens.TermsAndConditionsScreen
 import com.example.parcial_pr3_ort.ui.screens.categories_screens.SavingsCatScreen
 import com.example.parcial_pr3_ort.ui.screens.profile_screens.DeleteAccountScreen
 import com.example.parcial_pr3_ort.ui.screens.profile_screens.HelpFaqScreen
@@ -139,12 +148,115 @@ fun MainScaffold(rootNavController: NavHostController) {
                 TransactionScreen()
             }
 
-            composable(AppRoutes.PROFILE) {} // todo
-            composable(AppRoutes.EDIT_PROFILE) {} // todo
-            composable(AppRoutes.SECURITY) {} // todo
-            composable(AppRoutes.CHANGUE_PIN) {} // todo
-            composable(AppRoutes.FINGERPRINT) {} // todo
-            composable(AppRoutes.TERMS_AND_CONDITIONS) {} // todo
+            composable(AppRoutes.PROFILE) {
+                ProfileScreen(
+                    onEditProfileClick = { mainNavController.navigate(AppRoutes.EDIT_PROFILE) },
+                    onSecurityClick = { mainNavController.navigate(AppRoutes.SECURITY) },
+                    onSettingClick = { /* TODO: Navigate to settings */ },
+                    onHelpClick = { /* TODO: Navigate to help */ },
+                    onLogoutClick = {
+                        // Navigate back to auth graph
+                        rootNavController.navigate(AppRoutes.AUTH_GRAPH) {
+                            popUpTo(AppRoutes.MAIN_GRAPH) { inclusive = true }
+                        }
+                    }
+                )
+            }
+
+            composable(AppRoutes.EDIT_PROFILE) {
+                EditProfileScreen(
+                    onUpdateProfile = {
+                        // Navigate back to profile
+                        mainNavController.popBackStack()
+                    }
+                )
+            }
+
+            composable(AppRoutes.SECURITY) {
+                SecurityScreen(
+                    onChangePinClick = { mainNavController.navigate(AppRoutes.CHANGE_PIN) },
+                    onFingerprintClick = { mainNavController.navigate(AppRoutes.FINGERPRINT) },
+                    onTermsClick = { mainNavController.navigate(AppRoutes.TERMS_AND_CONDITIONS) }
+                )
+            }
+
+            composable(AppRoutes.CHANGE_PIN) {
+                ChangePinScreen(
+                    onChangePinClick = {
+                        mainNavController.navigate(AppRoutes.PIN_CHANGED_SUCCESS) {
+                            popUpTo(AppRoutes.SECURITY) { inclusive = false }
+                        }
+                    }
+                )
+            }
+
+            composable(AppRoutes.FINGERPRINT) {
+                FingerprintScreen(
+                    onJohnFingerprintClick = { mainNavController.navigate(AppRoutes.JHON_FINGERPRINT) },
+                    onAddFingerprintClick = { mainNavController.navigate(AppRoutes.ADD_FINGERPRINT) }
+                )
+            }
+
+            composable(AppRoutes.ADD_FINGERPRINT) {
+                AddFingerprintScreen(
+                    onUseTouchIdClick = {
+                        mainNavController.navigate(AppRoutes.FINGERPRINT_CHANGED_SUCCESS) {
+                            popUpTo(AppRoutes.FINGERPRINT) { inclusive = false }
+                        }
+                    }
+                )
+            }
+
+            composable(AppRoutes.JHON_FINGERPRINT) {
+                JhonFingerprintScreen(
+                    onDeleteClick = {
+                        mainNavController.navigate(AppRoutes.FINGERPRINT_DELETED_SUCCESS) {
+                            popUpTo(AppRoutes.FINGERPRINT) { inclusive = false }
+                        }
+                    }
+                )
+            }
+
+            composable(AppRoutes.TERMS_AND_CONDITIONS) {
+                TermsAndConditionsScreen(
+                    onAcceptClick = {
+                        mainNavController.popBackStack()
+                    }
+                )
+            }
+
+            composable(AppRoutes.PIN_CHANGED_SUCCESS) {
+                SuccessScreen(
+                    message = "Pin Has Been\nChanged Successfully",
+                    onNavigateBack = {
+                        mainNavController.navigate(AppRoutes.SECURITY) {
+                            popUpTo(AppRoutes.SECURITY) { inclusive = true }
+                        }
+                    }
+                )
+            }
+
+            composable(AppRoutes.FINGERPRINT_CHANGED_SUCCESS) {
+                SuccessScreen(
+                    message = "Fingerprint Has Been\nChanged Successfully",
+                    onNavigateBack = {
+                        mainNavController.navigate(AppRoutes.FINGERPRINT) {
+                            popUpTo(AppRoutes.FINGERPRINT) { inclusive = true }
+                        }
+                    }
+                )
+            }
+
+            composable(AppRoutes.FINGERPRINT_DELETED_SUCCESS) {
+                SuccessScreen(
+                    message = "The Fingerprint Has\nBeen Successfully\nDeleted.",
+                    onNavigateBack = {
+                        mainNavController.navigate(AppRoutes.FINGERPRINT) {
+                            popUpTo(AppRoutes.FINGERPRINT) { inclusive = true }
+                        }
+                    }
+                )
+            }
             composable(AppRoutes.SETTINGS_SCREEN) { SettingsScreens(mainNavController) }
             composable(AppRoutes.NOTIFICATION_SETTINGS) { NotificationSettingsScreen(mainNavController) }
             composable(AppRoutes.PASSWORD_SETTINGS) { PasswordSettingsScreen(rootNavController = rootNavController)}

@@ -11,6 +11,8 @@ composeBom = "2024.09.00"
 navigationCompose = "2.9.5"
 ksp = "2.3.0"
 material3 = "1.4.0"
+runtime = "1.9.4"
+foundation = "1.9.4"
 ui = "1.9.4"
 
 [libraries]
@@ -30,6 +32,8 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+androidx-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
+androidx-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
 
 [plugins]
